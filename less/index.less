@@ -1,5 +1,25 @@
  // out: ../css/index.css, compress: true, sourceMap: false
+ @table_font_size : 14px;
 
  body {
-     font-size: 100px;
+    padding: 12px;
+ }
+
+ table {
+    font-size: @table_font_size;
+    text-align: center;
+
+    img {
+       max-width: 80px;
+       max-height: 80px;
+    }
+
+    .btn {
+       font-size: @table_font_size;
+       padding: 0;
+    }
+ }
+
+ .table td {
+    vertical-align: middle;
  }

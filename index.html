@@ -2,16 +2,103 @@
 <html lang="en">
 
 <head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="css/index.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <!-- Custom -->
+    <script src="js/index.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>My Git Hub page</title>
+    <title>[짱고도타] 스패머 찾기</title>
 </head>
 
 <body>
-    Hello world!
 
+    <div class="form-group">
+        <label for="patch">패치</label>
+        <select class="form-control" name="patch" id="patch">
+            <!-- 39: 7.20, 40: 7.21, 41: 7.22, 42:7.23, 43: 7.24 -->
+            <option value="43">7.24</option>
+            <option value="42">7.23</option>
+            <option value="41">7.22</option>
+            <option value="40">7.21</option>
+            <option value="39">7.20</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="rank">랭크 기준</label>
+        <select class="form-control" name="rank" id="rank">
+            <option value="none">선택</option>
+            <option value="unranked">언랭</option>
+            <option value="herald">선구자</option>
+            <option value="guardian">수호자</option>
+            <option value="crusader">성전사</option>
+            <option value="archon">집정관</option>
+            <option value="legend">전설</option>
+            <option value="ancient">거장</option>
+            <option value="divine">신</option>
+            <option value="immortal">불멸자</option>
+        </select>
+        <small id="rankId" class="form-text text-muted">선택한 랭크 이상 플레이어들만 결과에 표시됩니다</small>
+    </div>
+
+    <p>
+        <a class="btn btn-primary" data-toggle="collapse" href="#contentId" aria-expanded="false"
+            aria-controls="contentId">
+            상세 설정
+        </a>
+    </p>
+    <div class="collapse" id="contentId">
+
+        <div class="form-group">
+            <label for="winrate">승률 기준 (단위:%)</label>
+            <input type="text" class="form-control" name="winrate" id="winrate" aria-describedby="winrateId"
+                placeholder="ex) 55, 최대 100까지 입력해주세요" maxlength="3" value="55">
+            <small id="winrateId" class="form-text text-muted">입력한 승률 이상의 플레이어들만 결과에 표시됩니다</small>
+        </div>
+
+        <div class="form-group">
+            <label for="min_played_count">최소 게임 횟수</label>
+            <input type="text" class="form-control" name="min_played_count" id="min_played_count"
+                aria-describedby="min_played_count_id" placeholder="ex) 20" value="20">
+            <small id="min_played_count_id" class="form-text text-muted">선택한 패치에서 최소 게임했던 횟수를 설정합니다</small>
+        </div>
+
+    </div>
+
+    <!-- 영웅 선택 -->
+    <div id="hero_container">
+        <div class="list-group">
+
+        </div>
+    </div>
+
+    <table id='hero_table' class="table">
+        <thead id='hero_table_header'>
+            <tr id='hero_table_header_tr'>
+            </tr>
+        </thead>
+        <tbody id='hero_table_body'>
+        </tbody>
+    </table>
 </body>
 
 </html>
