@@ -43,20 +43,26 @@
         </select>
     </div>
 
-    <div class="form-group">
+    <div id='rank_div' class="form-group">
         <label for="rank">랭크 기준</label>
-        <select class="form-control" name="rank" id="rank">
-            <option value="none">선택</option>
-            <option value="unranked">언랭</option>
-            <option value="herald">선구자</option>
-            <option value="guardian">수호자</option>
-            <option value="crusader">성전사</option>
-            <option value="archon">집정관</option>
-            <option value="legend">전설</option>
-            <option value="ancient">거장</option>
-            <option value="divine">신</option>
-            <option value="immortal">불멸자</option>
-        </select>
+        <div>
+            <select class="form-control" name="rank" id="rank">
+                <option value="80">불멸자</option>
+                <option value="70">신</option>
+                <option value="60">거장</option>
+                <option value="50">전설</option>
+                <option value="40">집정관</option>
+                <option value="30">성전사</option>
+                <option value="20">수호자</option>
+                <option value="10">선구자</option>
+            </select>
+
+            <div id='unranked' class="btn-group" data-toggle="buttons">
+                <label id='btn_unranked' class="btn btn-primary">
+                    <input type="checkbox" name="" id="" autocomplete="off">언랭 포함
+                </label>
+            </div>
+        </div>
         <small id="rankId" class="form-text text-muted">선택한 랭크 이상 플레이어들만 결과에 표시됩니다</small>
     </div>
 
@@ -78,7 +84,7 @@
         <div class="form-group">
             <label for="min_played_count">최소 게임 횟수</label>
             <input type="text" class="form-control" name="min_played_count" id="min_played_count"
-                aria-describedby="min_played_count_id" placeholder="ex) 20" value="20">
+                aria-describedby="min_played_count_id" placeholder="ex) 10" value="10">
             <small id="min_played_count_id" class="form-text text-muted">선택한 패치에서 최소 게임했던 횟수를 설정합니다</small>
         </div>
 
