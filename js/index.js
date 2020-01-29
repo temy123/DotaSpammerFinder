@@ -51,6 +51,7 @@ window.onload = function () {
     // Table 에 영웅 정보 추가
     function appendToRow(content) {
         var row = "";
+        var localized_name = content['localized_name'].replace(/ /gi, '_').replace(/'/gi, '');
 
         // tr 먼저
         // 안에 td 추가
@@ -70,10 +71,7 @@ window.onload = function () {
             }
             // 이름에 태그
             else if (key == ("localized_name")) {
-                // TODO: 플레이어 찾기 로직 추가
-                var url = 'search.html?id=' + content['id'] + '&patchVersion=' + getPatchVersion() + '&rank=' + getRank() + '&winrate=' + getWinRate() + '&minPlayedCount=' + getMinPlayedCount() + '&unranked=' + getUnranked();
-
-                var tag = '<a name="' + content['localized_name'] + '" id="' + content['localized_name'] + '" class="btn btn-link" href="' + url + '" role="button">' + content[key] + '</a>';
+                var tag = '<button type="button" name="' + localized_name + '" id="' + localized_name + '" class="btn btn-link" role="button">' + content[key] + '</button>';
                 row += '<td>' + tag + '</td>';
             }
 
@@ -86,6 +84,11 @@ window.onload = function () {
         // Last tr
         row += "</tr>";
         $('[id=hero_table_body]').append(row);
+
+        $('[id=' + localized_name + ']').click(function () {
+            var url = 'search.html?id=' + content['id'] + '&patchVersion=' + getPatchVersion() + '&rank=' + getRank() + '&winrate=' + getWinRate() + '&minPlayedCount=' + getMinPlayedCount() + '&unranked=' + getUnranked();
+            document.location.href = url;
+        });
     }
 
     // 테이블 초기화
