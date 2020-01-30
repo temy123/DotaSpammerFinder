@@ -1,8 +1,41 @@
- // out: ../css/index.css, compress: true, sourceMap: false
+ // out: ../css/service.css, compress: true, sourceMap: false
  @table_font_size : 14px;
 
+ body,
+ html {
+    overflow-x: scroll;
+ }
+
+.hero_container{
+   max-width: 100%;
+}
+
+ @media screen and (min-width: 768px) {
+
+    body,
+    html {
+       overflow-x: hidden;
+    }
+
+    .hero_container{
+      //  max-width: 540px;
+       max-width: 100%;
+    }
+
+ }
+
+// body,
+// html{
+//    overflow-x: hidden;
+// }
+
  body {
-    padding: 12px;
+    //  padding: 12px;
+ }
+
+ .settings {
+    padding-top: 32px;
+    padding-bottom: 32px;
  }
 
  table {

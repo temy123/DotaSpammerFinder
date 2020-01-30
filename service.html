@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <!-- 전체 테마 css -->
+    <!-- Slick slider -->
+    <link href="css/slick.css" rel="stylesheet">
+    <!-- Gallery Lightbox -->
+    <link href="css/magnific-popup.css" rel="stylesheet">
+    <!-- Skills Circle CSS  -->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/circlebars@1.0.3/dist/circle.css">
+    <!-- Main Style -->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- 전체 테마 css -->
+
+
+    <!-- Table 관련 CSS -->
+    <!-- <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="css/table.css">
+    <link rel="stylesheet" type="text/css" href="css/table_util.css">
+    <!-- Table 관련 CSS -->
+
+    <!-- Custom -->
+    <link rel="stylesheet" href="css/service.css">
+    <script src="js/service.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>[짱고도타] 스패머 찾기</title>
+</head>
+
+<body>
+
+    <!-- Firebase Init Start -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAAKsKgHrY9Hgg_cHm0iHCAb1JKynh6gFM",
+            authDomain: "dotaspammerfinder.firebaseapp.com",
+            databaseURL: "https://dotaspammerfinder.firebaseio.com",
+            projectId: "dotaspammerfinder",
+            storageBucket: "dotaspammerfinder.appspot.com",
+            messagingSenderId: "778948332473",
+            appId: "1:778948332473:web:645c0c613e33502a5d0468",
+            measurementId: "G-C8RDV7EBEY"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+    <!-- Firebase Init End -->
+
+    <!-- Start Header -->
+    <header id="mu-hero">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light mu-navbar">
+                <!-- Text based logo -->
+                <a class="navbar-brand mu-logo" href="index.html"><span>짱고도타</span></a>
+                <!-- image based logo -->
+                <!-- <a class="navbar-brand mu-logo" href="index.html"><img src="assets/images/logo.png" alt="logo"></a> -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="fa fa-bars"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto mu-navbar-nav">
+                        <li class="nav-item">
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item"><a href="about.html">About</a></li>
+                        <li class="nav-item active"><a href="service.html">Services</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="blog.html" role="button" id="navbarDropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Youtube</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="https://www.youtube.com/channel/UCqtnHWFdJLSjOvleWj0oH2A"
+                                    target="blank">짱고도타</a>
+                                <a class="dropdown-item" href="https://www.youtube.com/channel/UCgMjBYzdJzRTd125QbJah6g"
+                                    target="blank">FoREv TV</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!-- End Header -->
+
+
+    <!-- 설정 Start -->
+    <section id='mu-about'>
+        <div class='container settings'>
+            <div class="form-group">
+                <label for="patch">
+                    <h4>패치</h4>
+                </label>
+                <select class="form-control" name="patch" id="patch">
+                    <!-- 39: 7.20, 40: 7.21, 41: 7.22, 42:7.23, 43: 7.24 -->
+                    <option value="43">7.24</option>
+                    <option value="42">7.23</option>
+                    <option value="41">7.22</option>
+                    <option value="40">7.21</option>
+                    <option value="39">7.20</option>
+                </select>
+            </div>
+
+            <div id='rank_div' class="form-group">
+                <label for="rank">
+                    <h4>랭크 기준</h4>
+                </label>
+                <div>
+                    <select class="form-control" name="rank" id="rank">
+                        <option value="80">불멸자 (이모탈)</option>
+                        <option value="70">신 (디바인)</option>
+                        <option value="60">거장 (에이션트)</option>
+                        <option value="50">전설 (레전드)</option>
+                        <option value="40">집정관 (아콘)</option>
+                        <option value="30">성전사 (크루세이더)</option>
+                        <option value="20">수호자 (가디언)</option>
+                        <option value="10">선구자 (헤럴드)</option>
+                    </select>
+
+                    <div id='unranked' class="btn-group" data-toggle="buttons">
+                        <label id='btn_unranked' class="btn btn-primary">
+                            <input type="checkbox" name="" id="" autocomplete="off">언랭 포함
+                        </label>
+                    </div>
+                </div>
+                <small id="rankId" class="form-text text-muted">선택한 랭크 이상 플레이어들만 결과에 표시됩니다</small>
+            </div>
+
+            <div class="collapse" id="contentId">
+
+                <div class="form-group">
+                    <label for="winrate">
+                        <h4>승률 기준 (단위:%)</h4>
+                    </label>
+                    <input type="text" class="form-control" name="winrate" id="winrate" aria-describedby="winrateId"
+                        placeholder="ex) 55, 최대 100까지 입력해주세요" maxlength="3" value="55">
+                    <small id="winrateId" class="form-text text-muted">입력한 승률 이상의 플레이어들만 결과에 표시됩니다</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="min_played_count">
+                        <h4>최소 게임 횟수</h4>
+                    </label>
+                    <input type="text" class="form-control" name="min_played_count" id="min_played_count"
+                        aria-describedby="min_played_count_id" placeholder="ex) 10" value="10">
+                    <small id="min_played_count_id" class="form-text text-muted">선택한 패치에서 최소 게임했던 횟수를 설정합니다</small>
+                </div>
+
+            </div>
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#contentId" aria-expanded="false"
+                    aria-controls="contentId">
+                    상세 설정
+                </a>
+            </p>
+        </div>
+    </section>
+    <!-- 설정 End -->
+
+    <!-- 영웅 선택 -->
+    <div id="hero_container">
+        <div class="list-group">
+
+        </div>
+    </div>
+
+    <div class='container hero_container'>
+
+        <div class='container-table100'>
+            <div class='table100 ver1'>
+                <table id='hero_table' class="table">
+                    <thead id='hero_table_header'>
+                        <tr id='hero_table_header_tr' class='row100 head'>
+                        </tr>
+                    </thead>
+                    <tbody id='hero_table_body'>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </table>
+
+</body>
+
+</html>

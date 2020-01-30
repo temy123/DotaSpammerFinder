@@ -5,7 +5,20 @@ window.onload = function () {
 
     // 해당 정보를 표시할 지 여부 확인
     function canAppend(key) {
-        return !(key == 'name' || key.includes('pick') || key.includes('win'));
+        // 표시 안할 리스트
+        // !(key == 'name' || key.includes('pick') || key.includes('win'))
+        // 표시 할 리스트
+
+        // return true;
+
+        var keywords = [
+            'id',
+            'localized_name',
+            'roles',
+            'img',
+            'icon',
+        ];
+        return keywords.includes(key);
     }
 
     function ajaxHero() {
@@ -18,12 +31,30 @@ window.onload = function () {
         });
     }
 
+    function engKeyToKorKey(key) {
+        switch (key) {
+            case 'id':
+                return 'ID';
+            case 'localized_name':
+                return '이름';
+            case 'roles':
+                return '역할';
+            case 'img':
+                return '이미지';
+            case 'icon':
+                return '';
+            default:
+                return key;
+        }
+    }
+
     // Table 에 영웅 헤더 추가
     function appendToHeader(keySet) {
         for (let index = 0; index < keySet.length; index++) {
             const key = keySet[index];
             if (canAppend(key)) {
-                $('[id=hero_table_header_tr').append('<th>' + key + '</th>');
+
+                $('[id=hero_table_header_tr').append('<th>' + engKeyToKorKey(key) + '</th>');
             }
         }
     }
