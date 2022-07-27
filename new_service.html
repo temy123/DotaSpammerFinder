@@ -15,34 +15,54 @@
     <script src="js/new_service.js"></script>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body style="background-color: #1C1C1F;">
 
     <div id="content-container" class="">
 
+        <!-- Top Container -->
         <div class="top_container">
-            <!-- 티어 -->
-            <div>
-                <button type="button" class="button_default">
-                    <img src="https://opgg-static.akamaized.net/images/medals_mini/platinum.png?image=q_auto,f_png,w_48&amp;v=1658762585003"
-                        width="24" alt="" height="24">
-                    <span>Platinum +</span>
-                </button>
-            </div>
-            <!-- 티어 -->
+            <nav>
+                <!-- 티어 DropDown  -->
+                <div class="dropdown_"><label class="hidden" for="rank">불멸자 [Immortal]</label>
+                    <select id="rank">
+                        <option class="option" value="80">불멸자 [Immortal]</option>
+                        <option class="option" value="70">신 [Divine]</option>
+                        <option class="option" value="60">거장 [Ancient]</option>
+                        <option class="option" value="50">전설 [Legend]</option>
+                        <option class="option" value="40">집정관 [Arcorn]</option>
+                        <option class="option" value="30">성전사 [Crusader]</option>
+                        <option class="option" value="20">수호자 [Guardian]</option>
+                        <option class="option" value="10">선구자 [Herald]</option>
+                    </select>
+                </div>
+                <!-- 티어 DropDown  -->
+                <!-- 티어 -->
+                <div class="button_container">
+                    <div id="div_tier" style="display:block;">
+                        <button id="btn_rank" type="button" class="button_default">
+                            <img src="https://opgg-static.akamaized.net/images/medals_mini/platinum.png?image=q_auto,f_png,w_48&amp;v=1658762585003"
+                                width="24" alt="" height="24">
+                            <span>불멸자 [Immortal]</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 티어 -->
 
-            <!-- 패치 버전 -->
-            <div>
-                <button type="button" class="button_default">
-                    <span>Version: 12.13</span>
-                </button>
-            </div>
-            <!-- 패치 버전 -->
+                <!-- 패치 버전 -->
+                <div class="button_container">
+                    <div style="display:block;">
+                        <button type="button" class="button_default">
+                            <span>Version: 12.13</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 패치 버전 -->
 
+            </nav>
         </div>
+        <!-- Top Container -->
 
         <!-- Main Container -->
         <div class="main_container">

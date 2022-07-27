@@ -64,16 +64,27 @@ window.onload = () => {
         while (heroes.step()) {
             var heroData = heroes.get();
             var searchURL = getSearchPageURL(heroData[0], 50, 80, 55, 10, false);
-            
+
             appendNavHero('#', `${URL_HERO_IMG}${heroData[8]}`, heroData[3]);
-            appendMainHero('#', `${URL_HERO_IMG}${heroData[8]}`, heroData[3], searchURL, 1, 0, 0, 0, '준비중');
+            appendMainHero(heroData[0], `${URL_HERO_IMG}${heroData[8]}`, heroData[3], searchURL, 1, 0, 0, 0, '준비중');
         }
         heroes.free();
+    }
+
+    function bindDropdown() {
+        const btnRank = document.getElementById('btn_rank');
+        const divTier = document.getElementById('div_tier');
+
+        btnRank.addEventListener('click', (ev) => {
+            console.log('added');
+            divTier.innerHTML += `<div class="tier_container"><button class="option_button" type="button"><span>All</span></button></div>`;
+        });
     }
 
     function init() {
         initSql().then((model) => {
             bindNavContainer();
+            bindDropdown();
         });
     }
 

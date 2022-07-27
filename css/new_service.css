@@ -18,37 +18,125 @@ html {
   background: #FFF;
   background: #31313C;
 }
-.button_default {
+.top_container nav {
+  vertical-align: middle;
+  display: flex;
+  box-sizing: border-box;
+}
+option {
+  font-weight: normal;
+  display: block;
+  white-space: nowrap;
+  min-height: 1.2em;
+  padding: 0px 2px 1px;
+}
+select {
+  background: #ffffff;
+  border: none;
+  vertical-align: middle;
+  writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  color: fieldtext;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  appearance: auto;
+  box-sizing: border-box;
+  align-items: center;
+  white-space: pre;
+  -webkit-rtl-ordering: logical;
+  background-color: field;
+  cursor: default;
+  margin: 0em;
+  border-width: 1px;
+  border-style: solid;
+  border-color: -internal-light-dark(#767676, #858585);
+  border-image: initial;
+  border-radius: 0px;
+}
+select option {
+  font-weight: normal;
+  display: block;
+  white-space: nowrap;
+  min-height: 1.2em;
+  padding: 0px 2px 1px;
+}
+.hidden {
+  clip: rect(0px, 0px, 0px px, 0px);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+}
+.dropdown_ {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+  position: absolute;
+  visibility: hidden;
+  margin-left: 8px;
+}
+.button_container {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+.tier_container {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 44px;
+  z-index: 100;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 12px 0px;
+  max-height: initial !important;
+  overflow-y: initial !important;
+}
+.option_button {
+  min-width: 150px;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow: hidden;
+  padding: 0px 16px;
+  width: 100%;
+  height: 40px;
+  outline: none;
+  background: #31313C;
+  text-align: left;
+  color: #9E9EB1;
+  white-space: nowrap;
+  border: 0px;
+  padding: 0px;
+  cursor: pointer;
+}
+.button_default {
+  width: 100%;
+  min-width: 150px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow: hidden;
   position: relative;
   height: 40px;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border-bottom-left-radius: 4px;
+  border-radius: 4px;
   text-align: left;
   box-sizing: border-box;
-  border-top-width: 1px;
-  border-right-width: 1px;
-  border-bottom-width: 1px;
-  border-left-width: 1px;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-bottom-style: solid;
-  border-left-style: solid;
-  border-image-source: initial;
-  border-image-slice: initial;
-  border-image-width: initial;
-  border-image-outset: initial;
-  border-image-repeat: initial;
-  padding-top: 0px;
-  padding-right: 32px;
-  padding-bottom: 0px;
-  padding-left: 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-color: #424254;
+  padding: 0px 32px 0px 12px;
+  background: #282830;
+  cursor: pointer;
 }
 .button_default span {
   font-size: 14px;
@@ -59,6 +147,22 @@ html {
   text-overflow: ellipsis;
   overflow-x: hidden;
   overflow-y: hidden;
+}
+.button_default:after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  right: 15px;
+  width: 0px;
+  height: 0px;
+  border-width: 5px;
+  border-style: solid;
+  border-top-color: transparent;
+  border-bottom-color: #7B7A8E;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-image: initial;
+  margin-top: -7px;
 }
 .main_container {
   display: -webkit-box;
@@ -105,6 +209,26 @@ button {
 aside {
   margin-right: 8px;
   flex-basis: 332px;
+}
+aside nav {
+  display: block;
+}
+aside nav ul {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding-left: 8px;
+  gap: 8px;
+}
+aside nav ul li {
+  position: relative;
+  display: block;
+  width: 46px;
 }
 .hidden {
   clip: rect(0px, 0px, 0px, 0px);
@@ -194,26 +318,6 @@ main td {
   box-sizing: border-box;
   font-weight: normal;
   vertical-align: middle;
-}
-nav {
-  display: block;
-}
-nav ul {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex-wrap: wrap;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  padding-left: 8px;
-  gap: 8px;
-}
-nav ul li {
-  position: relative;
-  display: block;
-  width: 46px;
 }
 label {
   cursor: pointer;
