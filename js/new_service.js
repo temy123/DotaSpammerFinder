@@ -55,13 +55,18 @@ window.onload = () => {
         document.getElementById('mainHeroContainer').innerHTML += html;
     }
 
+    function getSearchPageURL(id, patchVersion, rank, winrate, minPlayedCount, unranked) {
+        return `search.html?id=${id}&patchVersion=${patchVersion}&rank=${rank}&winrate=${winrate}&minPlayedCount=${minPlayedCount}&unranked=${unranked}`
+    }
+
     function bindNavContainer() {
         heroes = sql_model.prepare('select * from Hero');
         while (heroes.step()) {
             var heroData = heroes.get();
-            console.log(heroData);
+            var searchURL = getSearchPageURL(heroData[0], 50, 80, 55, 10, false);
+            
             appendNavHero('#', `${URL_HERO_IMG}${heroData[8]}`, heroData[3]);
-            appendMainHero('#', `${URL_HERO_IMG}${heroData[8]}`, heroData[3], '#', 1, 0, 0, 0, '준비중');
+            appendMainHero('#', `${URL_HERO_IMG}${heroData[8]}`, heroData[3], searchURL, 1, 0, 0, 0, '준비중');
         }
         heroes.free();
     }
