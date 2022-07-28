@@ -1,83 +1,70 @@
+const URL_HERO_IMG = `https://api.opendota.com`
+const ARRAY_RANK_INFO = [{
+        name: "Immortal+",
+        val: 80
+    }, {
+        name: "Divine+",
+        val: 70
+    }, {
+        name: "Ancient+",
+        val: 60
+    }, {
+        name: "Legend+",
+        val: 50
+    }, {
+        name: "Arcorn+",
+        val: 40
+    }, {
+        name: "Crusader+",
+        val: 30
+    }, {
+        name: "Guardian+",
+        val: 20
+    }, {
+        name: "Herald+",
+        val: 10
+    }, ],
+    ARRAY_PATCH_INFO = [{
+        name: "7.31",
+        val: 50
+    }, {
+        name: "7.30",
+        val: 49
+    }, {
+        name: "7.29",
+        val: 48
+    }, {
+        name: "7.28",
+        val: 47
+    }, {
+        name: "7.27",
+        val: 46
+    }, {
+        name: "7.26",
+        val: 45
+    }, {
+        name: "7.25",
+        val: 44
+    }, {
+        name: "7.24",
+        val: 43
+    }, {
+        name: "7.23",
+        val: 42
+    }, {
+        name: "7.22",
+        val: 41
+    }, {
+        name: "7.21",
+        val: 40
+    }, {
+        name: "7.20",
+        val: 39
+    }, ]
+
 window.onload = () => {
     var sql = null;
     var sql_model = null;
-    const URL_HERO_IMG = `https://api.opendota.com`
-
-    const ARRAY_RANK_INFO = [{
-            'name': 'Immortal+',
-            'val': 80
-        },
-        {
-            'name': 'Divine+',
-            'val': 70
-        },
-        {
-            'name': 'Ancient+',
-            'val': 60
-        },
-        {
-            'name': 'Legend+',
-            'val': 50
-        },
-        {
-            'name': 'Arcorn+',
-            'val': 40
-        },
-        {
-            'name': 'Crusader+',
-            'val': 30
-        },
-        {
-            'name': 'Guardian+',
-            'val': 20
-        },
-        {
-            'name': 'Herald+',
-            'val': 10
-        },
-    ]
-
-    const ARRAY_PATCH_INFO = [{
-            'name': '7.31',
-            'val': 50
-        }, {
-            'name': '7.30',
-            'val': 49
-        }, {
-            'name': '7.29',
-            'val': 48
-        }, {
-            'name': '7.28',
-            'val': 47
-        }, {
-            'name': '7.27',
-            'val': 46
-        }, {
-            'name': '7.26',
-            'val': 45
-        }, {
-            'name': '7.25',
-            'val': 44
-        }, {
-            'name': '7.24',
-            'val': 43
-        }, {
-            'name': '7.23',
-            'val': 42
-        }, {
-            'name': '7.22',
-            'val': 41
-        }, {
-            'name': '7.21',
-            'val': 40
-        }, {
-            'name': '7.20',
-            'val': 39
-        },
-
-    ]
-
-
     // Local 에 있는 DB 데이터 가져오기
     function getLocalDbData() {
         return new Promise((resolve, reject) => {
@@ -172,6 +159,8 @@ window.onload = () => {
         tierContainer.firstElementChild.setAttribute('src', getTierIconSrc(tierInfo['val']));
         tierContainer.lastElementChild.textContent = tierInfo['name'];
         tierContainer.setAttribute('value', value);
+
+        sessionStorage.setItem('tier', value);
     }
 
     function selectPatch(value) {
@@ -180,10 +169,10 @@ window.onload = () => {
         var index = ARRAY_PATCH_INFO.length - (value - 39) - 1;
         var patchInfo = ARRAY_PATCH_INFO[index];
 
-        console.log(index);
-
         patchContainer.lastElementChild.textContent = patchInfo['name'];
         patchContainer.setAttribute('value', value);
+
+        sessionStorage.setItem('patch', value);
     }
 
     function getTierIconSrc(value) {
@@ -275,8 +264,18 @@ window.onload = () => {
             bindHeroContainer();
             bindDropdown();
 
-            selectTier(ARRAY_RANK_INFO[0].val);
-            selectPatch(ARRAY_PATCH_INFO[0].val);
+            if (sessionStorage.getItem('tier')) {
+                selectTier(sessionStorage.getItem('tier'));
+            } else {
+                selectTier(ARRAY_RANK_INFO[0].val);
+            }
+
+            if (sessionStorage.getItem('patch')) {
+                selectPatch(sessionStorage.getItem('patch'));
+            } else {
+                selectPatch(ARRAY_PATCH_INFO[0].val);
+            }
+
         });
     }
 
