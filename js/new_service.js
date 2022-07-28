@@ -112,14 +112,18 @@ window.onload = () => {
             });
     }
 
+    function getHeroSpammerIdURL(hero_id) {
+        return getSearchPageURL(hero_id, getCurrentPatch(), getCurrentTier(), 55, 20, true);
+    }
+
     function appendNavHero(a, img_src, name) {
         html = `<li><a href="${a}" class="css-mtyeel e1y3xkpj0"><img src="${img_src}" width="46" alt="garen" height="46"><span>${name}</span></a></li>`
         document.getElementById('navHeroContainer').innerHTML += html;
     }
 
-    function appendMainHero(i, img_src, name, a, tier, pick_rate, win_rate, ban_rate, against_heroes) {
+    function appendMainHero(i, img_src, name, tier, pick_rate, win_rate, ban_rate, against_heroes) {
         index = `<td class="table_default rank"><span>${i}</span></td>`;
-        name_ = `<td class="table_default hero"><a href="${a}"><img src="${img_src}" width="32" alt="${name}" height="32"><strong>${name}</strong></a></td>`;
+        name_ = `<td class="table_default hero"><a id="hero_${i}" href="#"><img src="${img_src}" width="32" alt="${name}" height="32"><strong>${name}</strong></a></td>`;
         tier_ = `<td class="table_default tier"><span class=""></span>${tier}</td>`;
         win_rate_ = `<td class="table_default number">${win_rate}%</td>`;
         pick_rate_ = `<td class="table_default number">${pick_rate}%</td>`;
@@ -127,23 +131,36 @@ window.onload = () => {
         against_heroes_ = `<td class="table_default"></td>`;
 
         html = `<tr>${index}${name_}${tier_}${win_rate_}${pick_rate_}${ban_rate_}${against_heroes_}</tr>`;
-        document.getElementById('mainHeroContainer').innerHTML += html;
+
+        // onclick 이벤트가 사라지지 않게 innerHTML 에 직접 넣지 않고 함수를 사용
+        document.getElementById('mainHeroContainer').insertAdjacentHTML('beforebegin', html);
+
+        document.getElementById(`hero_${i}`).addEventListener('click', (ev) => {
+            location.href = getHeroSpammerIdURL(i);
+        });
     }
 
     function getSearchPageURL(id, patchVersion, rank, winrate, minPlayedCount, unranked) {
         return `search.html?id=${id}&patchVersion=${patchVersion}&rank=${rank}&winrate=${winrate}&minPlayedCount=${minPlayedCount}&unranked=${unranked}`
     }
 
-    function bindNavContainer() {
+    function bindHeroContainer() {
         heroes = sql_model.prepare('select * from Hero');
         while (heroes.step()) {
             var heroData = heroes.get();
-            var searchURL = getSearchPageURL(heroData[0], 50, 80, 55, 10, false);
 
             appendNavHero('#', `${URL_HERO_IMG}${heroData[8]}`, heroData[3]);
-            appendMainHero(heroData[0], `${URL_HERO_IMG}${heroData[8]}`, heroData[3], searchURL, 1, 0, 0, 0, '준비중');
+            appendMainHero(heroData[0], `${URL_HERO_IMG}${heroData[8]}`, heroData[3], 1, 0, 0, 0, '준비중');
         }
         heroes.free();
+    }
+
+    function getCurrentTier() {
+        return document.getElementById('btn_rank').getAttribute('value');
+    }
+
+    function getCurrentPatch() {
+        return document.getElementById('btn_patch').getAttribute('value');
     }
 
     function selectTier(value) {
@@ -255,7 +272,7 @@ window.onload = () => {
 
     function init() {
         initSql().then((model) => {
-            bindNavContainer();
+            bindHeroContainer();
             bindDropdown();
 
             selectTier(ARRAY_RANK_INFO[0].val);
