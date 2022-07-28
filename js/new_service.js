@@ -3,6 +3,41 @@ window.onload = () => {
     var sql_model = null;
     const URL_HERO_IMG = `https://api.opendota.com`
 
+    const ARRAY_RANK_INFO = [{
+            'name': '불멸자 [Immortal]',
+            'val': 80
+        },
+        {
+            'name': '신 [Divine]',
+            'val': 70
+        },
+        {
+            'name': '거장 [Ancient]',
+            'val': 60
+        },
+        {
+            'name': '전설 [Legend]',
+            'val': 50
+        },
+        {
+            'name': '집정관 [Arcorn]',
+            'val': 40
+        },
+        {
+            'name': '성전사 [Crusader]',
+            'val': 30
+        },
+        {
+            'name': '수호자 [Guardian]',
+            'val': 20
+        },
+        {
+            'name': '선구자 [Herald]',
+            'val': 10
+        },
+
+    ]
+
     // Local 에 있는 DB 데이터 가져오기
     function getLocalDbData() {
         return new Promise((resolve, reject) => {
@@ -71,13 +106,55 @@ window.onload = () => {
         heroes.free();
     }
 
+    function selectTier(value) {
+        var tierContainer = document.getElementById('btn_rank');
+
+        var index = ARRAY_RANK_INFO.length - (value / 10);
+        var tierInfo = ARRAY_RANK_INFO[index];
+
+        tierContainer.firstElementChild.setAttribute('src', getTierIconSrc(tierInfo['val']));
+        tierContainer.lastElementChild.textContent = tierInfo['name'];
+        tierContainer.setAttribute('value', value);
+    }
+
+    function getTierIconSrc(value) {
+        return `img/rank_icon_${value/10}.png`;
+    }
+
     function bindDropdown() {
         const btnRank = document.getElementById('btn_rank');
         const divTier = document.getElementById('div_tier');
 
+        const handleSelect = (element) => {
+            selectTier(element.getAttribute('value'));
+            var container = document.getElementsByClassName('tier_container')[0];
+            container.parentElement.removeChild(container);
+        };
+
         btnRank.addEventListener('click', (ev) => {
-            console.log('added');
-            divTier.innerHTML += `<div class="tier_container"><button class="option_button" type="button"><span>All</span></button></div>`;
+            if (divTier.childElementCount != 1) return;
+
+            var tierContainer = document.createElement('div');
+            tierContainer.classList.add('tier_container');
+
+            ARRAY_RANK_INFO.forEach(item => {
+                var button = document.createElement('button');
+                var icon = document.createElement('img');
+                var span = document.createElement('span');
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', item['val']);
+                button.classList.add('option_button');
+                icon.setAttribute('src', getTierIconSrc(item['val']));
+                icon.setAttribute('width', 24);
+                icon.setAttribute('height', 24);
+                span.textContent = item['name'];
+                tierContainer.appendChild(button);
+                button.appendChild(icon);
+                button.appendChild(span);
+
+                button.addEventListener('click', (ev) => handleSelect(button));
+            });
+            divTier.appendChild(tierContainer);
         });
     }
 
@@ -85,6 +162,8 @@ window.onload = () => {
         initSql().then((model) => {
             bindNavContainer();
             bindDropdown();
+
+            selectTier(ARRAY_RANK_INFO[0].val);
         });
     }
 

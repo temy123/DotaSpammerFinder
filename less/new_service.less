@@ -117,6 +117,11 @@ select {
 }
 
 .option_button {
+
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #1C1C1F;
+
     width: 100%;
     min-width: 150px;
 
@@ -124,23 +129,56 @@ select {
     -webkit-box-align: center;
     align-items: center;
     overflow: hidden;
-    padding: 0px 16px;
-    width: 100%;
+    padding: 0px 12px;
+    background: #31313C;
     height: 40px;
     outline: none;
-    background: #31313C;
     text-align: left;
     color: #9E9EB1;
     white-space: nowrap;
 
     border: 0px;
-    padding: 0px;
     cursor: pointer;
+
+    &:hover {
+        background: #282830;
+    }
+
+    img {
+        margin-right: 8px;
+
+        border: 0px;
+        vertical-align: middle;
+        max-width: 100%;
+
+        width: 24px;
+        aspect-ratio: auto 24 / 24;
+        height: 24px;
+    }
+
+    span {
+        font-size: 12px;
+        line-height: 16px;
+
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        text-align: left;
+        color: #9E9EB1;
+        white-space: nowrap;
+    }
 }
 
 .button_default {
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: #1C1C1F;
+
     width: 100%;
     min-width: 150px;
+
     display: flex;
     -webkit-box-align: center;
     align-items: center;
@@ -154,9 +192,13 @@ select {
     border-style: solid;
     border-image: initial;
     border-color: #424254;
+    background: #31313C;
     padding: 0px 32px 0px 12px;
-    background: #282830;
     cursor: pointer;
+
+    img {
+        margin-right: 4px;
+    }
 
     span {
         font-size: 14px;
@@ -167,6 +209,10 @@ select {
         text-overflow: ellipsis;
         overflow-x: hidden;
         overflow-y: hidden;
+    }
+
+    &:hover {
+        background: #282830;
     }
 
     &:after {
