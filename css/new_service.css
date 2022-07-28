@@ -88,7 +88,8 @@ select option {
   vertical-align: middle;
   margin-left: 8px;
 }
-.tier_container {
+.tier_container,
+.patch_container {
   position: absolute;
   left: 0px;
   right: 0px;
@@ -190,12 +191,12 @@ select option {
   height: 0px;
   border-width: 5px;
   border-style: solid;
-  border-top-color: transparent;
-  border-bottom-color: #7B7A8E;
+  border-top-color: #7B7A8E;
+  border-bottom-color: transparent;
   border-right-color: transparent;
   border-left-color: transparent;
   border-image: initial;
-  margin-top: -7px;
+  margin-top: -1px;
 }
 .main_container {
   display: -webkit-box;

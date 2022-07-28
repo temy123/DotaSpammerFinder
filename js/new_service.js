@@ -4,39 +4,79 @@ window.onload = () => {
     const URL_HERO_IMG = `https://api.opendota.com`
 
     const ARRAY_RANK_INFO = [{
-            'name': '불멸자 [Immortal]',
+            'name': 'Immortal+',
             'val': 80
         },
         {
-            'name': '신 [Divine]',
+            'name': 'Divine+',
             'val': 70
         },
         {
-            'name': '거장 [Ancient]',
+            'name': 'Ancient+',
             'val': 60
         },
         {
-            'name': '전설 [Legend]',
+            'name': 'Legend+',
             'val': 50
         },
         {
-            'name': '집정관 [Arcorn]',
+            'name': 'Arcorn+',
             'val': 40
         },
         {
-            'name': '성전사 [Crusader]',
+            'name': 'Crusader+',
             'val': 30
         },
         {
-            'name': '수호자 [Guardian]',
+            'name': 'Guardian+',
             'val': 20
         },
         {
-            'name': '선구자 [Herald]',
+            'name': 'Herald+',
             'val': 10
+        },
+    ]
+
+    const ARRAY_PATCH_INFO = [{
+            'name': '7.31',
+            'val': 50
+        }, {
+            'name': '7.30',
+            'val': 49
+        }, {
+            'name': '7.29',
+            'val': 48
+        }, {
+            'name': '7.28',
+            'val': 47
+        }, {
+            'name': '7.27',
+            'val': 46
+        }, {
+            'name': '7.26',
+            'val': 45
+        }, {
+            'name': '7.25',
+            'val': 44
+        }, {
+            'name': '7.24',
+            'val': 43
+        }, {
+            'name': '7.23',
+            'val': 42
+        }, {
+            'name': '7.22',
+            'val': 41
+        }, {
+            'name': '7.21',
+            'val': 40
+        }, {
+            'name': '7.20',
+            'val': 39
         },
 
     ]
+
 
     // Local 에 있는 DB 데이터 가져오기
     function getLocalDbData() {
@@ -117,11 +157,23 @@ window.onload = () => {
         tierContainer.setAttribute('value', value);
     }
 
+    function selectPatch(value) {
+        var patchContainer = document.getElementById('btn_patch');
+
+        var index = ARRAY_PATCH_INFO.length - (value - 39) - 1;
+        var patchInfo = ARRAY_PATCH_INFO[index];
+
+        console.log(index);
+
+        patchContainer.lastElementChild.textContent = patchInfo['name'];
+        patchContainer.setAttribute('value', value);
+    }
+
     function getTierIconSrc(value) {
         return `img/rank_icon_${value/10}.png`;
     }
 
-    function bindDropdown() {
+    function bindDropDownTier() {
         const btnRank = document.getElementById('btn_rank');
         const divTier = document.getElementById('div_tier');
 
@@ -132,7 +184,10 @@ window.onload = () => {
         };
 
         btnRank.addEventListener('click', (ev) => {
-            if (divTier.childElementCount != 1) return;
+            if (divTier.childElementCount != 1) {
+                handleSelect(btnRank);
+                return;
+            }
 
             var tierContainer = document.createElement('div');
             tierContainer.classList.add('tier_container');
@@ -158,12 +213,53 @@ window.onload = () => {
         });
     }
 
+    function bindDropDownPatch() {
+        const btnPatch = document.getElementById('btn_patch');
+        const divPatch = document.getElementById('div_patch');
+
+        const handleSelect = (element) => {
+            selectPatch(element.getAttribute('value'));
+            var container = document.getElementsByClassName('patch_container')[0];
+            container.parentElement.removeChild(container);
+        };
+
+        btnPatch.addEventListener('click', (ev) => {
+            if (divPatch.childElementCount != 1) {
+                handleSelect(btnPatch);
+                return;
+            }
+
+            var patchContainer = document.createElement('div');
+            patchContainer.classList.add('patch_container');
+
+            ARRAY_PATCH_INFO.forEach(item => {
+                var button = document.createElement('button');
+                var span = document.createElement('span');
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', item['val']);
+                button.classList.add('option_button');
+                span.textContent = item['name'];
+                patchContainer.appendChild(button);
+                button.appendChild(span);
+
+                button.addEventListener('click', (ev) => handleSelect(button));
+            });
+            divPatch.appendChild(patchContainer);
+        });
+    }
+
+    function bindDropdown() {
+        bindDropDownTier();
+        bindDropDownPatch();
+    }
+
     function init() {
         initSql().then((model) => {
             bindNavContainer();
             bindDropdown();
 
             selectTier(ARRAY_RANK_INFO[0].val);
+            selectPatch(ARRAY_PATCH_INFO[0].val);
         });
     }
 
