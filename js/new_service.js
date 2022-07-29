@@ -128,7 +128,7 @@ window.onload = () => {
     }
 
     function getSearchPageURL(id, patchVersion, rank, winrate, minPlayedCount, unranked) {
-        return `search.html?id=${id}&patchVersion=${patchVersion}&rank=${rank}&winrate=${winrate}&minPlayedCount=${minPlayedCount}&unranked=${unranked}`
+        return `new_search.html?id=${id}&patchVersion=${patchVersion}&rank=${rank}&winrate=${winrate}&minPlayedCount=${minPlayedCount}&unranked=${unranked}`
     }
 
     function bindHeroContainer() {
