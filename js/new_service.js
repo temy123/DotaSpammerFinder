@@ -136,7 +136,9 @@ window.onload = () => {
         while (heroes.step()) {
             var heroData = heroes.get();
 
-            appendNavHero('#', `${URL_HERO_IMG}${heroData[8]}`, heroData[3]);
+            heroDetailUrl = `https://www.dota2.com/hero/${heroData[2]}?l=koreana`;
+
+            appendNavHero(heroDetailUrl, `${URL_HERO_IMG}${heroData[8]}`, heroData[3]);
             appendMainHero(heroData[0], `${URL_HERO_IMG}${heroData[8]}`, heroData[3], 1, 0, 0, 0, '준비중');
         }
         heroes.free();
