@@ -142,8 +142,6 @@ window.onload = () => {
         while (heroes.step()) {
             var heroData = heroes.getAsObject();
 
-            console.log(heroData);
-
             heroDetailUrl = `https://www.dota2.com/hero/${heroData['localized_name'].replace(' ', '')}?l=koreana`;
 
             appendNavHero(heroDetailUrl, `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor']);
