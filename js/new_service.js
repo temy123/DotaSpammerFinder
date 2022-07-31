@@ -25,42 +25,44 @@ const ARRAY_RANK_INFO = [{
         val: 10
     }, ],
     ARRAY_PATCH_INFO = [{
-        name: "7.31",
-        val: 50
-    }, {
-        name: "7.30",
-        val: 49
-    }, {
-        name: "7.29",
-        val: 48
-    }, {
-        name: "7.28",
-        val: 47
-    }, {
-        name: "7.27",
-        val: 46
-    }, {
-        name: "7.26",
-        val: 45
-    }, {
-        name: "7.25",
-        val: 44
-    }, {
-        name: "7.24",
-        val: 43
-    }, {
-        name: "7.23",
-        val: 42
-    }, {
-        name: "7.22",
-        val: 41
-    }, {
-        name: "7.21",
-        val: 40
-    }, {
-        name: "7.20",
-        val: 39
-    }, ]
+            name: "7.31",
+            val: 50
+        },
+        // {
+        //     name: "7.30",
+        //     val: 49
+        // }, {
+        //     name: "7.29",
+        //     val: 48
+        // }, {
+        //     name: "7.28",
+        //     val: 47
+        // }, {
+        //     name: "7.27",
+        //     val: 46
+        // }, {
+        //     name: "7.26",
+        //     val: 45
+        // }, {
+        //     name: "7.25",
+        //     val: 44
+        // }, {
+        //     name: "7.24",
+        //     val: 43
+        // }, {
+        //     name: "7.23",
+        //     val: 42
+        // }, {
+        //     name: "7.22",
+        //     val: 41
+        // }, {
+        //     name: "7.21",
+        //     val: 40
+        // }, {
+        //     name: "7.20",
+        //     val: 39
+        // }, 
+    ]
 
 window.onload = () => {
     var sql = null;
@@ -168,7 +170,8 @@ window.onload = () => {
     function selectPatch(value) {
         var patchContainer = document.getElementById('btn_patch');
 
-        var index = ARRAY_PATCH_INFO.length - (value - 39) - 1;
+        var index = ARRAY_PATCH_INFO.length - (value - 50) - 1;
+        // var index = ARRAY_PATCH_INFO.length - (value - 39) - 1;
         var patchInfo = ARRAY_PATCH_INFO[index];
 
         patchContainer.lastElementChild.textContent = patchInfo['name'];
