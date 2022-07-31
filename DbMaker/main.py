@@ -124,7 +124,7 @@ def get_opendota_heroes_list():
 
 if __name__ == '__main__':
     delete_hero_data()
-    create_hero_table()
+    # create_hero_table()
 
     pd.set_option('display.max_rows', 100)
     pd.set_option('display.max_columns', 100)
@@ -133,33 +133,24 @@ if __name__ == '__main__':
     df2 = pd.DataFrame(get_opendota_heroes_list())
 
     result = pd.merge(df, df2, on='name')
+    result.loc[result['primary_attr_y'] == 'str', 'primary_attr'] = '힘'
+    result.loc[result['primary_attr_y'] == 'agi', 'primary_attr'] = '민첩'
+    result.loc[result['primary_attr_y'] == 'int', 'primary_attr'] = '지능'
 
-    for idx, item in result.iterrows():
-        primary_attr = item['primary_attr_y']
-        if 'str' == primary_attr:
-            primary_attr = '힘'
-        elif 'agi' == primary_attr:
-            primary_attr = '민첩'
-        else:
-            primary_attr = '지능'
+    result.loc[result['attack_type'] == 'Melee', 'attack_type_kor'] = '근접'
+    result.loc[result['attack_type'] == 'Ranged', 'attack_type_kor'] = '원거리'
 
-        attack_type = item['attack_type']
-        if 'Melee' == attack_type:
-            attack_type = '근접'
-        else:
-            attack_type = '원거리'
+    result.rename(columns={
+        'name_loc': 'localized_name_kor',
+        'name_english_loc': 'localized_name_eng',
+    }, inplace=True)
 
-        pick_array = []
-        for i in range(1, 9):
-            pick_rate = item[f"{i}_pick"]
-            win_rate = item[f"{i}_win"]
-            pick_array.append({
-                'pick': pick_rate,
-                'win': win_rate,
-            })
+    result.drop('roles', axis='columns', inplace=True)
 
-        insert_hero_data(item['hero_id'], item['name'], item['name_english_loc'],
-                         item['name_loc'], item['primary_attr_y'], primary_attr,
-                         item['attack_type'], attack_type, item['img'], item['icon'], pick_array)
+    result.sort_index()
 
-        print(get_local_heroes())
+    conn = open_db()
+
+    result.to_sql('Hero', conn, if_exists='replace')
+
+    print(get_local_heroes())

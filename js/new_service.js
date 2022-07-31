@@ -85,6 +85,10 @@ window.onload = () => {
         })
     }
 
+    function calculateTier(pick_rate, win_rate) {
+
+    }
+
     function initSql() {
         var config = {
             locateFile: filename => `/dist/${filename}`
@@ -136,12 +140,14 @@ window.onload = () => {
     function bindHeroContainer() {
         heroes = sql_model.prepare('select * from Hero');
         while (heroes.step()) {
-            var heroData = heroes.get();
+            var heroData = heroes.getAsObject();
 
-            heroDetailUrl = `https://www.dota2.com/hero/${heroData[2]}?l=koreana`;
+            console.log(heroData);
 
-            appendNavHero(heroDetailUrl, `${URL_HERO_IMG}${heroData[8]}`, heroData[3]);
-            appendMainHero(heroData[0], `${URL_HERO_IMG}${heroData[8]}`, heroData[3], 1, 0, 0, 0, '준비중');
+            heroDetailUrl = `https://www.dota2.com/hero/${heroData['localized_name'].replace(' ', '')}?l=koreana`;
+
+            appendNavHero(heroDetailUrl, `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor']);
+            appendMainHero(heroData['hero_id'], `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor'], 1, 0, 0, 0, '준비중');
         }
         heroes.free();
     }
