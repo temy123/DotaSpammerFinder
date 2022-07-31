@@ -126,7 +126,7 @@ window.onload = () => {
         html = `<tr>${index}${name_}${tier_}${win_rate_}${pick_rate_}${ban_rate_}${against_heroes_}</tr>`;
 
         // onclick 이벤트가 사라지지 않게 innerHTML 에 직접 넣지 않고 함수를 사용
-        document.getElementById('mainHeroContainer').insertAdjacentHTML('beforebegin', html);
+        document.getElementById('mainHeroContainer').insertAdjacentHTML('beforeend', html);
 
         document.getElementById(`hero_${i}`).addEventListener('click', (ev) => {
             location.href = getHeroSpammerIdURL(i);
