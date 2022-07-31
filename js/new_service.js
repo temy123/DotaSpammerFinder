@@ -263,6 +263,48 @@ window.onload = () => {
         });
     }
 
+    function on_clicked_headers(ev, i) {
+        if (i == 6) return;
+
+        var container = document.getElementById('mainHeroContainer');
+        var childrens = container.children;
+
+        var sortState = container.getAttribute('sort');
+        var currentState = (sortState == 'desc') ? 'asc' : 'desc'
+
+        container.setAttribute('sort', currentState);
+
+        var direction = (currentState == 'desc') ? 1 : -1;
+
+        var rows = Array.prototype.slice.call(childrens, 0);
+        rows.sort((row1, row2) => {
+            var cell1 = row1.getElementsByTagName('td')[i];
+            var cell2 = row2.getElementsByTagName('td')[i];
+            var val1 = cell1.textContent || cell1.innerText;
+            var val2 = cell2.textContent || cell2.innerText;
+            if (Number(val1)) val1 = Number(val1);
+            if (Number(val2)) val2 = Number(val2);
+            if (val1 < val2) return direction;
+            if (val1 > val2) return direction * -1;
+            return 0;
+        });
+
+        rows.forEach(element => {
+            container.appendChild(element);
+        });
+    }
+
+    function bindTableClickTags() {
+        var thead = document.getElementsByTagName('thead')[0];
+
+        var tags = thead.children[0].children;
+        for (let i = 0; i < tags.length; i++) {
+            const element = tags[i];
+            element.setAttribute('index', i);
+            element.addEventListener('click', (ev) => on_clicked_headers(ev, i));
+        }
+    }
+
     function bindDropdown() {
         bindDropDownTier();
         bindDropDownPatch();
@@ -272,6 +314,7 @@ window.onload = () => {
         initSql().then((model) => {
             bindHeroContainer();
             bindDropdown();
+            bindTableClickTags();
 
             if (sessionStorage.getItem('tier')) {
                 selectTier(sessionStorage.getItem('tier'));
