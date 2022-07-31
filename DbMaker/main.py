@@ -122,13 +122,7 @@ def get_opendota_heroes_list():
     return response.json()
 
 
-if __name__ == '__main__':
-    delete_hero_data()
-    # create_hero_table()
-
-    pd.set_option('display.max_rows', 100)
-    pd.set_option('display.max_columns', 100)
-
+def get_hero_stats():
     df = pd.DataFrame(get_official_heroes_list())
     df2 = pd.DataFrame(get_opendota_heroes_list())
 
@@ -148,9 +142,43 @@ if __name__ == '__main__':
     result.drop('roles', axis='columns', inplace=True)
 
     result.sort_index()
+    return result
+
+
+def get_matches(_hero_stats):
+    total_picks = 0
+    _matches = pd.DataFrame([
+        {'id': 0}
+    ])
+    for i in range(1, 9):
+        pick = _hero_stats[[f"{i}_pick"]].sum()
+        win = _hero_stats[[f"{i}_win"]].sum()
+
+        _matches[[f"{i}_pick"]] = pick
+        _matches[[f"{i}_win"]] = win
+
+        total_picks += pick[0]
+
+        # pd.merge(matches, pick)
+        # pd.merge(matches, win)
+
+    _matches[['total']] = total_picks
+    return _matches
+
+
+if __name__ == '__main__':
+    delete_hero_data()
+    # create_hero_table()
+
+    pd.set_option('display.max_rows', 100)
+    pd.set_option('display.max_columns', 100)
 
     conn = open_db()
 
-    result.to_sql('Hero', conn, if_exists='replace')
+    hero_stats = get_hero_stats()
+    hero_stats.to_sql('Hero', conn, if_exists='replace')
 
-    print(get_local_heroes())
+    matches = get_matches(hero_stats)
+    matches.to_sql('Matches', conn, if_exists='replace')
+
+    # print(get_local_heroes())

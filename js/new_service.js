@@ -64,6 +64,9 @@ const ARRAY_RANK_INFO = [{
         // }, 
     ]
 
+var currentTierValue = ARRAY_RANK_INFO[0].val;
+var currentPatchValue = ARRAY_PATCH_INFO[0].val;
+
 window.onload = () => {
     var sql = null;
     var sql_model = null;
@@ -139,23 +142,29 @@ window.onload = () => {
 
     function bindHeroContainer() {
         heroes = sql_model.prepare('select * from Hero');
+
+        var tierVal = getCurrentTier() / 10;
+
         while (heroes.step()) {
             var heroData = heroes.getAsObject();
 
-            heroDetailUrl = `https://www.dota2.com/hero/${heroData['localized_name'].replace(' ', '')}?l=koreana`;
+            var heroDetailUrl = `https://www.dota2.com/hero/${heroData['localized_name'].replace(' ', '')}?l=koreana`;
+            var winRate = heroData[`${tierVal}_win`];
+            var pickRate = heroData[`${tierVal}_pick`];
+
 
             appendNavHero(heroDetailUrl, `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor']);
-            appendMainHero(heroData['hero_id'], `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor'], 1, 0, 0, 0, '준비중');
+            appendMainHero(heroData['hero_id'], `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor'], calculateTier(), pickRate, winRate, '-', '준비중');
         }
         heroes.free();
     }
 
     function getCurrentTier() {
-        return document.getElementById('btn_rank').getAttribute('value');
+        return currentTierValue;
     }
 
     function getCurrentPatch() {
-        return document.getElementById('btn_patch').getAttribute('value');
+        return currentPatchValue;
     }
 
     function selectTier(value) {
@@ -169,6 +178,7 @@ window.onload = () => {
         tierContainer.setAttribute('value', value);
 
         sessionStorage.setItem('tier', value);
+        currentTierValue = value;
     }
 
     function selectPatch(value) {
@@ -182,6 +192,7 @@ window.onload = () => {
         patchContainer.setAttribute('value', value);
 
         sessionStorage.setItem('patch', value);
+        currentPatchValue = value;
     }
 
     function getTierIconSrc(value) {
@@ -310,24 +321,26 @@ window.onload = () => {
         bindDropDownPatch();
     }
 
+    function getSessionData() {
+        if (sessionStorage.getItem('tier')) {
+            currentTierValue = sessionStorage.getItem('tier');
+        }
+
+        if (sessionStorage.getItem('patch')) {
+            currentPatchValue = sessionStorage.getItem('patch');
+        }
+    }
+
     function init() {
         initSql().then((model) => {
+            getSessionData();
+
             bindHeroContainer();
             bindDropdown();
             bindTableClickTags();
 
-            if (sessionStorage.getItem('tier')) {
-                selectTier(sessionStorage.getItem('tier'));
-            } else {
-                selectTier(ARRAY_RANK_INFO[0].val);
-            }
-
-            if (sessionStorage.getItem('patch')) {
-                selectPatch(sessionStorage.getItem('patch'));
-            } else {
-                selectPatch(ARRAY_PATCH_INFO[0].val);
-            }
-
+            selectTier(currentTierValue);
+            selectPatch(currentPatchValue);
         });
     }
 
