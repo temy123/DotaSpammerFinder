@@ -120,7 +120,8 @@ window.onload = () => {
     function appendMainHero(i, img_src, name, tier, pick_rate, win_rate, ban_rate, against_heroes) {
         index = `<td class="table_default rank"><span>${i}</span></td>`;
         name_ = `<td class="table_default hero"><a id="hero_${i}" href="#"><img src="${img_src}" width="32" alt="${name}" height="32"><strong>${name}</strong></a></td>`;
-        tier_ = `<td class="table_default tier"><span class=""></span>${tier}</td>`;
+        tier_ = `<td class="table_default tier"><img src="img/icon-tier-${tier}.svg" style="background:none; width:24px; height:24px; text-align:center;vertical-align:middle;"><span class=""></span>${tier}</td>`;
+        // tier_ = `<td class="table_default tier"><span class="tier" style="background-image: url(img/icon-tier-${tier}.svg)"></span>${tier}</td>`;
         win_rate_ = `<td class="table_default number">${win_rate}%</td>`;
         pick_rate_ = `<td class="table_default number">${pick_rate}%</td>`;
         ban_rate_ = `<td class="table_default number">${ban_rate}%</td>`;
@@ -141,7 +142,14 @@ window.onload = () => {
     }
 
     function bindHeroContainer() {
-        heroes = sql_model.prepare('select * from Hero');
+        document.getElementById('navHeroContainer').innerHTML = '';
+        document.getElementById('mainHeroContainer').innerHTML = '';
+
+        var heroes = sql_model.prepare('select * from Hero');
+        var matches = sql_model.prepare('select * from Matches');
+        matches.step()
+
+        var matchData = matches.getAsObject();
 
         var tierVal = getCurrentTier() / 10;
 
@@ -149,14 +157,15 @@ window.onload = () => {
             var heroData = heroes.getAsObject();
 
             var heroDetailUrl = `https://www.dota2.com/hero/${heroData['localized_name'].replace(' ', '')}?l=koreana`;
-            var winRate = heroData[`${tierVal}_win`];
-            var pickRate = heroData[`${tierVal}_pick`];
-
+            var winRate = ((heroData[`${tierVal}_win`] / heroData[`${tierVal}_pick`]) * 100).toFixed(1);
+            var pickRate = ((heroData[`${tierVal}_pick`] / matchData[`${tierVal}_pick`]) * 1000).toFixed(1);
 
             appendNavHero(heroDetailUrl, `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor']);
-            appendMainHero(heroData['hero_id'], `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor'], calculateTier(), pickRate, winRate, '-', '준비중');
+            appendMainHero(heroData['hero_id'], `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor'], heroData[`${tierVal}_tier`], pickRate, winRate, '-', '준비중');
         }
+
         heroes.free();
+        matches.free();
     }
 
     function getCurrentTier() {
@@ -207,6 +216,8 @@ window.onload = () => {
             selectTier(element.getAttribute('value'));
             var container = document.getElementsByClassName('tier_container')[0];
             container.parentElement.removeChild(container);
+
+            bindHeroContainer();
         };
 
         btnRank.addEventListener('click', (ev) => {
@@ -293,6 +304,8 @@ window.onload = () => {
             var cell2 = row2.getElementsByTagName('td')[i];
             var val1 = cell1.textContent || cell1.innerText;
             var val2 = cell2.textContent || cell2.innerText;
+            val1 = val1.replace('%', '');
+            val2 = val2.replace('%', '');
             if (Number(val1)) val1 = Number(val1);
             if (Number(val2)) val2 = Number(val2);
             if (val1 < val2) return direction;

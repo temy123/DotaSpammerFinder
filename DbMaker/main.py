@@ -142,7 +142,36 @@ def get_hero_stats():
     result.drop('roles', axis='columns', inplace=True)
 
     result.sort_index()
+    result.set_index('hero_id', inplace=True)
+
     return result
+
+
+def update_hero_tier_column(hero_df, matches_df):
+    for i in range(1, 9):
+        win_rate_df = (hero_df[f"{i}_win"] / hero_df[f"{i}_pick"]) * 100
+        win_rate_df.sort_values(ascending=False, inplace=True)
+
+        pick_rate_df = (hero_df[f"{i}_pick"] / matches_df[f"{i}_pick"][0]) * 1000
+        pick_rate_df.sort_values(ascending=False, inplace=True)
+
+        # 그 외 5티어
+        hero_df[f"{i}_tier"] = '5'
+
+        # 4티어
+        tier_4_hero_index = get_tier_index(win_rate_df, pick_rate_df, 40, 0)
+        tier_3_hero_index = get_tier_index(win_rate_df, pick_rate_df, 43, 5)
+        tier_2_hero_index = get_tier_index(win_rate_df, pick_rate_df, 46, 10)
+        tier_1_hero_index = get_tier_index(win_rate_df, pick_rate_df, 49, 15)
+        op_tier_hero_index = get_tier_index(win_rate_df, pick_rate_df, 52, 20)
+
+        hero_df.loc[tier_4_hero_index, f"{i}_tier"] = '4'
+        hero_df.loc[tier_3_hero_index, f"{i}_tier"] = '3'
+        hero_df.loc[tier_2_hero_index, f"{i}_tier"] = '2'
+        hero_df.loc[tier_1_hero_index, f"{i}_tier"] = '1'
+        hero_df.loc[op_tier_hero_index, f"{i}_tier"] = '0'
+
+    return hero_df
 
 
 def get_matches(_hero_stats):
@@ -166,6 +195,13 @@ def get_matches(_hero_stats):
     return _matches
 
 
+def get_tier_index(win_rate_df, pick_rate_df, win_rate, pick_rate):
+    win_rate_index = win_rate_df[win_rate_df > win_rate].index
+    pick_rate_index = pick_rate_df[pick_rate_df > pick_rate].index
+
+    return win_rate_index.intersection(pick_rate_index)
+
+
 if __name__ == '__main__':
     delete_hero_data()
     # create_hero_table()
@@ -176,9 +212,43 @@ if __name__ == '__main__':
     conn = open_db()
 
     hero_stats = get_hero_stats()
-    hero_stats.to_sql('Hero', conn, if_exists='replace')
 
     matches = get_matches(hero_stats)
+
+    hero_stats = update_hero_tier_column(hero_stats, matches)
+
     matches.to_sql('Matches', conn, if_exists='replace')
+    hero_stats.to_sql('Hero', conn, if_exists='replace')
+
+    # # 1티어
+    # win_rate = win_rate[win_rate > 49]
+    # pick_rate = pick_rate[pick_rate > 15]
+    #
+    # # 2티어
+    # win_rate = win_rate[win_rate > 46]
+    # pick_rate = pick_rate[pick_rate > 10]
+
+    # print(win_rate_num)
+    # print(pick_rate_num)
+    #
+    # print(win_rate)
+    # print(pick_rate)
+    #
+    # df1 = pd.DataFrame(win_rate, columns=['win_rate'])
+    # df2 = pd.DataFrame(pick_rate, columns=['pick_rate'])
+    #
+    # # hero_stats['win_rate'] = df1
+    # # hero_stats['pick_rate'] = df2
+    #
+    # df = hero_stats[(hero_stats['win_rate'] > 0)]
+    #
+    # print(df)
+
+    # df = pd.merge(, pd.DataFrame(pick_rate, columns=['pick_rate']))
+
+    # df = pd.merge(hero_stats, win_rate)
+    # df = pd.merge(df, pick_rate)
+
+    # print(df)
 
     # print(get_local_heroes())
