@@ -22,5 +22,11 @@ if __name__ == "__main__":
 
     shutil.copy2(new_db_path, origin_db_path)
 
+    date_string = datetime.datetime.now().strftime("[%y-%m-%d %H:%M:%S]")
     with open('update.log', 'a') as f:
-        f.write(datetime.datetime.now().strftime("[%y-%m-%d %H:%M:%S] Created\n"))
+        f.write(f"{date_string} Created\n")
+
+    os.system('cd ..')
+    os.system('git add --all')
+    os.system(f"git commit -m \"{date_string} DB Updated\"")
+    os.system(f"git push origin master")
