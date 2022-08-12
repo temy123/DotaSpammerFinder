@@ -202,7 +202,7 @@ def get_tier_index(win_rate_df, pick_rate_df, win_rate, pick_rate):
     return win_rate_index.intersection(pick_rate_index)
 
 
-if __name__ == '__main__':
+def create_db():
     delete_hero_data()
     # create_hero_table()
 
@@ -219,6 +219,10 @@ if __name__ == '__main__':
 
     matches.to_sql('Matches', conn, if_exists='replace')
     hero_stats.to_sql('Hero', conn, if_exists='replace')
+
+
+if __name__ == '__main__':
+    create_db()
 
     # # 1티어
     # win_rate = win_rate[win_rate > 49]
