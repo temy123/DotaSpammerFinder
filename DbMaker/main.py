@@ -3,9 +3,11 @@ import requests
 import json
 import pandas as pd
 import datetime
+import os
 
 URL_OFFICIAL_HERO_LIST = 'https://www.dota2.com/datafeed/herolist?language=koreana'
 URL_OPENDOTA_HERO_LIST = 'https://api.opendota.com/api/heroStats'
+URL_IMAGE_URL = 'https://api.opendota.com/apps/dota2/images/dota_react/heroes'
 
 
 def get_db_file_name():
@@ -53,6 +55,19 @@ def create_hero_table():
 
     conn.cursor().execute(query)
     conn.close()
+
+
+def to_png(name):
+    path = os.path.join(os.path.dirname(__file__), 'img')
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+    url = f"{URL_IMAGE_URL}/{name}"
+
+    response = requests.get(url)
+
+    with open(f"{path}/{name}", 'wb') as f:
+        f.write(response.content)
 
 
 def delete_hero_data():
@@ -222,7 +237,10 @@ def create_db():
 
 
 if __name__ == '__main__':
-    create_db()
+    df = pd.read_sql_query('select * from Hero', open_db())
+    print(df)
+
+    # create_db()
 
     # # 1티어
     # win_rate = win_rate[win_rate > 49]
