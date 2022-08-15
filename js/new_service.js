@@ -166,6 +166,9 @@ window.onload = () => {
 
         heroes.free();
         matches.free();
+
+        // 티어 순으로 정렬
+        sort_table(2, true);
     }
 
     function getCurrentTier() {
@@ -285,14 +288,18 @@ window.onload = () => {
         });
     }
 
-    function on_clicked_headers(ev, i) {
-        if (i == 6) return;
-
+    function sort_table(i, asc = null) {
         var container = document.getElementById('mainHeroContainer');
         var childrens = container.children;
 
         var sortState = container.getAttribute('sort');
         var currentState = (sortState == 'desc') ? 'asc' : 'desc'
+
+        if (asc != null && asc == true) {
+            currentState = 'asc';
+        } else if (asc != null && asc == false) {
+            currentState = 'desc';
+        }
 
         container.setAttribute('sort', currentState);
 
@@ -316,6 +323,12 @@ window.onload = () => {
         rows.forEach(element => {
             container.appendChild(element);
         });
+    }
+
+    function on_clicked_headers(ev, i) {
+        if (i == 6) return;
+
+        sort_table(i);
     }
 
     function bindTableClickTags() {
