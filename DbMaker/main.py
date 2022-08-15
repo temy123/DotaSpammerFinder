@@ -4,6 +4,8 @@ import json
 import pandas as pd
 import datetime
 import os
+import shutil
+import urllib
 
 URL_OFFICIAL_HERO_LIST = 'https://www.dota2.com/datafeed/herolist?language=koreana'
 URL_OPENDOTA_HERO_LIST = 'https://api.opendota.com/api/heroStats'
@@ -57,16 +59,10 @@ def create_hero_table():
     conn.close()
 
 
-def to_png(name):
-    path = os.path.join(os.path.dirname(__file__), 'img')
-    if not os.path.exists(path):
-        os.mkdir(path)
+def to_png(path: str, url: str, name: str):
+    response = requests.get(f"https://api.opendota.com{url}")
 
-    url = f"{URL_IMAGE_URL}/{name}"
-
-    response = requests.get(url)
-
-    with open(f"{path}/{name}", 'wb') as f:
+    with open(f"{path}/{name}.png", 'wb') as f:
         f.write(response.content)
 
 
@@ -156,6 +152,14 @@ def get_hero_stats():
 
     result.drop('roles', axis='columns', inplace=True)
 
+    real_name_list = []
+    for i, item in result['img'].iteritems():
+        real_name = item.split('/')
+        real_name = real_name[len(real_name) - 1]
+        real_name_list.append(real_name.replace('.png?', ''))
+
+    result = result.join(pd.DataFrame(real_name_list, columns=['real_name']))
+
     result.sort_index()
     result.set_index('hero_id', inplace=True)
 
@@ -236,11 +240,40 @@ def create_db():
     hero_stats.to_sql('Hero', conn, if_exists='replace')
 
 
-if __name__ == '__main__':
-    df = pd.read_sql_query('select * from Hero', open_db())
-    print(df)
+def create_heroes_img_folder(path: str):
+    if not os.path.exists(path):
+        os.mkdir(path)
 
-    # create_db()
+
+def save_heroes_img(hero_df):
+    size = len(hero_df['localized_name_eng'])
+
+    print(f"==== Save Images Started ====")
+    print(f"==== Total Count : {size} ====")
+
+    path = os.path.join(os.path.dirname(__file__), 'img')
+    create_heroes_img_folder(path)
+
+    for i, url in hero_df['img'].iteritems():
+        real_name = hero_df['real_name'][i]
+        # 파일이 없는 경우에만 다운로드
+        if not os.path.exists(os.path.join(os.path.dirname(__file__), 'img', f"{real_name}.png")):
+            print(f"== {i}: {real_name}")
+            to_png(path, url, real_name)
+
+    print(f"==== Save Images Ended ====")
+
+
+if __name__ == '__main__':
+    pd.set_option('display.max_rows', 100)
+    pd.set_option('display.max_columns', 100)
+
+    # 각종 DB 생성
+    create_db()
+
+    # 이미지 다운로드
+    df = pd.read_sql_query('select * from Hero', open_db())
+    save_heroes_img(df)
 
     # # 1티어
     # win_rate = win_rate[win_rate > 49]
