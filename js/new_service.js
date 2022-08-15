@@ -160,8 +160,8 @@ window.onload = () => {
             var winRate = ((heroData[`${tierVal}_win`] / heroData[`${tierVal}_pick`]) * 100).toFixed(1);
             var pickRate = ((heroData[`${tierVal}_pick`] / matchData[`${tierVal}_pick`]) * 1000).toFixed(1);
 
-            appendNavHero(heroDetailUrl, `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor']);
-            appendMainHero(heroData['hero_id'], `${URL_HERO_IMG}${heroData['img']}`, heroData['localized_name_kor'], heroData[`${tierVal}_tier`], pickRate, winRate, '-', '준비중');
+            appendNavHero(heroDetailUrl, `img/heroes/${heroData['real_name']}.png`, heroData['localized_name_kor']);
+            appendMainHero(heroData['hero_id'], `img/heroes/${heroData['real_name']}.png`, heroData['localized_name_kor'], heroData[`${tierVal}_tier`], pickRate, winRate, '-', '준비중');
         }
 
         heroes.free();
