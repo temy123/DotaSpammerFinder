@@ -1,15 +1,8 @@
+var players = null;
+// UI에 추가 한 플레이어 아이디
+var array_appended_players = [];
+
 window.onload = function () {
-
-    var players = null;
-    var initProgress = 0;
-
-    function setProgress(max, val) {
-        console.log('val : ' + val + ' max : ' + max);
-        var progress = Math.round((val / max) * 100);
-        $('#progress').css('width', progress + '%');
-        $('#progress').attr('aria-valuenow', progress);
-        $('#progress').text(progress + '%');
-    }
 
     function getHeroId() {
         var link = location.href;
@@ -19,16 +12,6 @@ window.onload = function () {
         }
 
         return id;
-    }
-
-    function getPatchVersion() {
-        var link = location.href;
-        var result = link.split("patchVersion=")[1];
-        if (result.includes('&')) {
-            result = result.split('&')[0];
-        }
-
-        return result;
     }
 
     function getRank() {
@@ -41,29 +24,9 @@ window.onload = function () {
         return result;
     }
 
-    function getWinrate() {
+    function getPatchVersion() {
         var link = location.href;
-        var result = link.split("winrate=")[1];
-        if (result.includes('&')) {
-            result = result.split('&')[0];
-        }
-
-        return result;
-    }
-
-    function getUnranked() {
-        var link = location.href;
-        var result = link.split("unranked=")[1];
-        if (result.includes('&')) {
-            result = result.split('&')[0];
-        }
-
-        return result;
-    }
-
-    function getMinPlayedCount() {
-        var link = location.href;
-        var result = link.split("minPlayedCount=")[1];
+        var result = link.split("patchVersion=")[1];
         if (result.includes('&')) {
             result = result.split('&')[0];
         }
@@ -82,6 +45,106 @@ window.onload = function () {
         return win_rate;
     }
 
+    function getMinPlayedCount() {
+        var link = location.href;
+        var result = link.split("minPlayedCount=")[1];
+        if (result.includes('&')) {
+            result = result.split('&')[0];
+        }
+
+        return result;
+    }
+
+    function getWinrate() {
+        var link = location.href;
+        var result = link.split("winrate=")[1];
+        if (result.includes('&')) {
+            result = result.split('&')[0];
+        }
+
+        return result;
+    }
+
+    function appendPlayer(playerId, avatarSrc, personName, rankTier, matches, win, lose, win_rate) {
+        var cell = `<tr>
+                    <td>${playerId}</td>
+                    <td align="left"><a id="${playerId}" href="#" style="display: flex; flex-direction: row; align-items: center;">
+                    <img src="${avatarSrc}"><span>${personName}</span></a></td>
+                    <td><img src="img/rank_icon_${rankTier}.png"></td>
+                    <td>${matches}</td>
+                    <td>${win}</td>
+                    <td>${lose}</td>
+                    <td>${win_rate}%</td>`;
+
+        document.getElementById('bodyPlayers').insertAdjacentHTML('beforeend', cell);
+        document.getElementById(playerId).addEventListener('click', (ev) => {
+            window.open(`https://www.opendota.com/players/${playerId}/matches?hero_id=${getHeroId()}&party_size=1&patch=${getPatchVersion()}&lobby_type=7`);
+        });
+    }
+
+    function canAppendThisPlayer(matches, win_rate) {
+        return matches >= getMinPlayedCount() && win_rate > getWinrate();
+    }
+
+    function stalkPlayer(playerId, avatarSrc, heroId) {
+        new Promise((resolve, reject) => {
+                var patchVersion = getPatchVersion();
+                // 랭겜만 검색
+                var url = `https://api.opendota.com/api/players/${playerId}/wl?hero_id=${heroId}&patch=${patchVersion}&party_size=1&lobby_type=7`
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (response) {
+                        resolve(response);
+                    },
+                    error: function (request, status, error) {
+                        reject();
+                    }
+                });
+            }).then(function (response) {
+                var win = response['win'];
+                var lose = response['lose'];
+
+                // 추가
+                win_rate = getHeroWlPercent(win, lose);
+
+                total_match_count = win + lose;
+
+
+                if (canAppendThisPlayer(total_match_count, win_rate)) {
+                    appendPlayer(playerId, avatarSrc, players[0]['personaname'], players[0]['rank_tier'] / 10, total_match_count, win, lose, win_rate);
+                }
+
+                var info = {
+                    'playerId': playerId,
+                    'avatarSrc': avatarSrc,
+                    'person': players[0]['personaname'],
+                    'rankTier': players[0]['rank_tier'] / 10,
+                    'matches': total_match_count,
+                    'win': win,
+                    'lose': lose,
+                    'winRate': win_rate,
+                }
+                array_appended_players.push(playerId);
+
+                sessionStorage.setItem(`${getHeroId()}_${playerId}`, JSON.stringify(info));
+                sessionStorage.setItem(`${getHeroId()}_appended`, JSON.stringify(array_appended_players));
+            })
+            // 에러 난 경우 해당 플레이어 다시 요청
+            .catch(function (error) {
+                console.log(`에러났음 : ${error}`);
+            })
+            .finally(() => {
+                players.shift();
+                if (players.length > 0) {
+                    const playerId = players[0]['account_id'];
+                    const avatarSrc = players[0]['avatar'];
+                    stalkPlayer(playerId, avatarSrc, getHeroId());
+                }
+            });
+    }
+
     function ajaxPlayers() {
         $.ajax({
             type: "get",
@@ -93,122 +156,49 @@ window.onload = function () {
                 for (let index = 0; index < playerRankings.length; index++) {
                     const element = playerRankings[index];
                     const rank_tier = element['rank_tier'];
-                    // rank_tier < getRank() || 
-                    if (((rank_tier == '0' || rank_tier == null) && getUnranked() == 'false') || Number(rank_tier) < Number(getRank())) {
+
+                    if (((rank_tier == '0' || rank_tier == null) == 'false') || Number(rank_tier) < Number(getRank())) {
                         playerRankings.splice(index, 1);
                     }
                 }
 
                 players = Array.from(playerRankings);
-                // 첫 검별 된 사이즈를 기록
-                initProgress = players.length;
+                sessionStorage.setItem(getHeroId(), JSON.stringify(players));
 
                 const playerId = players[0]['account_id'];
-                stalkPlayer(playerId, getHeroId());
+                const avatarSrc = players[0]['avatar'];
+                stalkPlayer(playerId, avatarSrc, getHeroId());
             }
         });
     }
 
-    function rankToText(val) {
-        switch (val) {
-            case 0:
-                return 'Unranked';
-            case 10:
-                return 'Herald';
-            case 20:
-                return 'Guardian';
-            case 30:
-                return 'Crusader';
-            case 40:
-                return 'Archon';
-            case 50:
-                return 'Legend';
-            case 60:
-                return 'Ancient';
-            case 70:
-                return 'Divine';
-            case 80:
-                return 'Immortal';
-            default:
-                break;
-        }
-    }
+    function init() {
+        players = sessionStorage.getItem(getHeroId());
+        if (players == null) {
+            ajaxPlayers();
+        } else {
+            players = JSON.parse(players);
+            array_appended_players = JSON.parse(sessionStorage.getItem(`${getHeroId()}_appended`));
 
-    function stalkPlayer(playerId, heroId) {
-        var promise = new Promise(function (resolve, reject) {
-            var patchVersion = getPatchVersion();
-            var url = 'https://api.opendota.com/api/players/' + playerId + '/wl?hero_id=' + heroId + '&patch=' + patchVersion + '&party_size=1'
+            array_appended_players.forEach(playerId => {
+                var info = JSON.parse(sessionStorage.getItem(`${getHeroId()}_${playerId}`));
 
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function (response) {
-                    resolve(response);
-                },
-                error: function (request, status, error) {
-                    reject();
-                }
-            });
-        });
-
-        promise.then(function (response) {
-                var win = response['win'];
-                var lose = response['lose'];
-
-                // 추가
-                win_rate = getHeroWlPercent(win, lose);
-
-                total_match_count = win + lose;
-
-                console.log('minCount : ' + getMinPlayedCount() + ' win : ' + win + ' lose : ' + lose + ' winrate : ' + win_rate);
-
-                // 전체 배열이 줄어드는 형식이기 때문에 다음과 같이 작성
-                setProgress(initProgress, initProgress - players.length);
-
-                if (total_match_count >= getMinPlayedCount() && win_rate > getWinrate()) {
-                    var cell = '<tr id="' + playerId + '" class="btn-link">';
-                    cell += '<td>' + playerId + '</td>'
-                    cell += '<td>' + players[0]['personaname'] + '</td>'
-                    cell += '<td>' + rankToText(players[0]['rank_tier']) + '</td>'
-                    cell += '<td>' + total_match_count + '</td>'
-                    cell += '<td>' + win + '</td>'
-                    cell += '<td>' + lose + '</td>'
-                    cell += '<td>' + win_rate + '</td>'
-                    cell += '<tr/>';
-
-                    $('[id=player_table_body]').append(cell);
-                    $('#' + playerId).on('click', function () {
-                        window.open('https://www.opendota.com/players/' + playerId + '/matches?hero_id=' + heroId, '_blank');
-                    });
+                if (canAppendThisPlayer(info['matches'], info['winRate'])) {
+                    appendPlayer(info['playerId'], info['avatarSrc'], info['person'],
+                        info['rankTier'], info['matches'], info['win'], info['lose'], info['winRate']);
                 }
 
                 players.shift();
-                if (players.length > 0) {
-                    const playerId = players[0]['account_id'];
-                    stalkPlayer(playerId, getHeroId());
-                }
 
-            })
-            // 에러 난 경우 해당 플레이어 다시 요청
-            .catch(function (error) {
-                console.log('에러났음 : ' + error);
-                stalkPlayer(playerId, heroId);
             });
-    }
 
-
-    function ajaxWlHistory(playerId, heroId) {
-        var patchVersion = getPatchVersion();
-        var url = 'https://api.opendota.com/api/players/' + playerId + '/wl?hero_id=' + heroId + '&patch=' + patchVersion + '&party_size=1'
-
-        $.ajax({
-            type: "get",
-            url: url,
-            success: function (response) {
-                console.log(response);
+            if (players.length > 0) {
+                stalkPlayer(players[0]['account_id'], players[0]['avatar'], getHeroId());
             }
-        });
+        }
+
     }
 
-    ajaxPlayers();
+    init();
+
 }

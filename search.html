@@ -1,58 +1,53 @@
 <!doctype html>
-<html lang="en">
+<html lang="kr">
 
 <head>
-  <title>[짱고는 못말려]</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>[짱고는 못말려] 스패머 찾기</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="js/search.js"></script>
 
-  <!-- Optional JavaScript -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-  <!--  Custom -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="js/search.js"></script>
-
-  <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/search.css">
 
 </head>
 
 <body>
+    <div class="container">
+        <section>
+            <div class="top_banner">
+                <div>
+                    <span>
+                        Players
+                    </span>
+                </div>
+            </div>
+            <div class="players_container">
+                <table>
+                    <thead style="background-color: #282830">
+                        <tr>
+                            <th>ID</th>
+                            <th align="left">Player</th>
+                            <th>Rank</th>
+                            <th>Matches</th>
+                            <th>Win</th>
+                            <th>Lose</th>
+                            <th>WinRate</th>
+                        </tr>
+                    </thead>
 
-  <h1>플레이어 검색 중</h1>
+                    <tbody id="bodyPlayers">
+                        
+                    </tbody>
 
-  <div class="progress">
-    <div  id='progress' class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
-      aria-valuemax="100">%</div>
-  </div>
+                </table>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>NickName</th>
-        <th>Rank</th>
-        <th>Total</th>
-        <th>Win</th>
-        <th>Lose</th>
-        <th>WinRate</th>
-      </tr>
-    </thead>
-    <tbody id='player_table_body'>
-      <tr>
-        <td scope="row"></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-
+            </div>
+        </section>
+    </div>
 </body>
 
 </html>
