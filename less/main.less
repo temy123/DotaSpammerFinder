@@ -2,12 +2,16 @@
 
 @search_container_width :65%;
 @default_padding_size :12px;
+@size_width :1080px;
+
 
 
 .container {
-    width: 100%;
-    display: flexbox;
+    // width: @size_width;
+    display: flex;
     text-align: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding-top: 80px;
     padding-bottom: 24px;
@@ -76,6 +80,7 @@ span {
 
 .search_container {
     display: flex;
+    width: @search_container_width;
     text-align: center;
     flex-direction: column;
     align-items: center;
@@ -119,6 +124,7 @@ span {
         }
 
         a {
+            width: 100%;
             display: flex;
             align-items: center;
             text-decoration: none;

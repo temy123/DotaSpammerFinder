@@ -1,6 +1,7 @@
 // out: "../css/default.css", compress: true, sourceMap: false
 
 @accent :#5383E8;
+@size_width :1080px;
 
 // html {
 //     display: flex;
@@ -13,6 +14,12 @@ body {
     background-color: #1C1C1F;
 }
 
+.dota-header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: @accent;
+}
 
 .header {
 
@@ -23,10 +30,9 @@ body {
 
     padding: 0px;
     margin: 0px;
-    
+
     font-size: 12pt;
 
-    background-color: @accent;
 
     .selected {
         // color: #00fede;
