@@ -1,0 +1,28 @@
+// out: "../css/new_about.css", compress: true, sourceMap: false
+
+@size_width :1080px;
+
+.container {
+
+    .slogan {
+        width: 100%;
+        height: 100%;
+        display: flexbox;
+        // position: relative;
+        vertical-align: middle;
+        align-items: center;
+
+        img {
+            width: @size_width;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        span {
+            position: absolute;
+            font-size: 24pt;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+}
