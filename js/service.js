@@ -113,7 +113,7 @@ window.onload = () => {
     }
 
     function appendNavHero(a, img_src, name) {
-        html = `<li><a href="${a}" class="css-mtyeel e1y3xkpj0"><img src="${img_src}" width="46" alt="garen" height="46"><span>${name}</span></a></li>`
+        html = `<li><a href="${a}" target="_blank" class="css-mtyeel e1y3xkpj0"><img src="${img_src}" width="46" alt="garen" height="46"><span>${name}</span></a></li>`
         document.getElementById('navHeroContainer').innerHTML += html;
     }
 
