@@ -9,6 +9,7 @@ import urllib
 
 URL_OFFICIAL_HERO_LIST = 'https://www.dota2.com/datafeed/herolist?language=koreana'
 URL_OPENDOTA_HERO_LIST = 'https://api.opendota.com/api/heroStats'
+URL_OPENDOTA_MATCH_UP = 'https://api.opendota.com/api/heroes/{hero_id}/matchups'
 URL_IMAGE_URL = 'https://api.opendota.com/apps/dota2/images/dota_react/heroes'
 
 
@@ -221,6 +222,27 @@ def get_tier_index(win_rate_df, pick_rate_df, win_rate, pick_rate):
     return win_rate_index.intersection(pick_rate_index)
 
 
+def calculate_match_ups(hero_df):
+
+    hero_df.
+
+    # for i, hero in hero_df.iteritems():
+    #     print(hero.keys())
+    #     id_ = hero['hero_id']
+    #     url = URL_OPENDOTA_MATCH_UP.replace("{hero_id}", id_)
+    #
+    #     response = requests.get(url)
+    #     match_up_data = response.json()
+    #
+    #     match_up_df = pd.DataFrame(match_up_data)
+    #
+    #     avgs = match_up_df['games_played'].mean()
+    #
+    #     print(f"hero_id : {id_}, avgs : {avgs}")
+
+    return hero_df
+
+
 def create_db():
     delete_hero_data()
     # create_hero_table()
@@ -235,6 +257,8 @@ def create_db():
     matches = get_matches(hero_stats)
 
     hero_stats = update_hero_tier_column(hero_stats, matches)
+
+    hero_stats = calculate_match_ups(hero_stats)
 
     matches.to_sql('Matches', conn, if_exists='replace')
     hero_stats.to_sql('Hero', conn, if_exists='replace')
@@ -271,9 +295,9 @@ if __name__ == '__main__':
     # 각종 DB 생성
     create_db()
 
-    # 이미지 다운로드
-    df = pd.read_sql_query('select * from Hero', open_db())
-    save_heroes_img(df)
+    # # 이미지 다운로드
+    # df = pd.read_sql_query('select * from Hero', open_db())
+    # save_heroes_img(df)
 
     # # 1티어
     # win_rate = win_rate[win_rate > 49]
