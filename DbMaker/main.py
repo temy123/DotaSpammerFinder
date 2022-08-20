@@ -224,7 +224,7 @@ def get_tier_index(win_rate_df, pick_rate_df, win_rate, pick_rate):
 
 def calculate_match_ups(hero_df):
 
-    hero_df.
+    # hero_df.
 
     # for i, hero in hero_df.iteritems():
     #     print(hero.keys())
