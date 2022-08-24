@@ -25,7 +25,7 @@ const ARRAY_RANK_INFO = [{
         val: 10
     }, ],
     ARRAY_PATCH_INFO = [{
-            name: "7.32",
+            name: "7.32 [22.08.24일 추가]",
             val: 51
         }, {
             name: "7.31",
