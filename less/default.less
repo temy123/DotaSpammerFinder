@@ -3,6 +3,35 @@
 @accent :#5383E8;
 @size_width :1080px;
 
+
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+html {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+@media (prefers-color-scheme: light) {}
+
+@media (prefers-color-scheme: dark) {}
+
+
+// @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+// html {
+//     font-family: 'Noto Sans KR', sans-serif;
+// }
+
+// html {
+//     font-family: 'MabinogiClassicR';
+// }
+
+// @font-face {
+//     font-family: 'MabinogiClassicR';
+//     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/MabinogiClassicR.woff2') format('woff2');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
 // html {
 //     display: flex;
 //     align-items: center;
@@ -18,6 +47,7 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+    min-width: @size_width;
     background-color: @accent;
 }
 
@@ -56,7 +86,7 @@ body {
             margin: 0px;
             display: flex;
 
-            img{
+            img {
                 width: 96px;
                 height: 48px;
                 object-fit: contain;
