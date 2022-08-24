@@ -1,6 +1,9 @@
 // out: "../css/service.css", compress: true, sourceMap: false
 
 @text: rgb(49, 49, 60);
+@background: #31313C;
+@width: 1080px;
+@notice_background: rgb(25, 186, 255);
 
 html {
     font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Dotum, Roboto, sans-serif;
@@ -9,7 +12,7 @@ html {
 
 .top_container {
     box-sizing: border-box;
-    width: 1080px;
+    width: @width;
     margin: 8px auto;
     padding: 4px;
     border-radius: 4px;
@@ -21,13 +24,28 @@ html {
     -webkit-justify-content: space-between;
     justify-content: space-between;
     background: #FFF;
-    background: #31313C;
+    background: @background;
 
     nav {
         vertical-align: middle;
         display: flex;
         box-sizing: border-box;
     }
+}
+
+.notice {
+    width: @width;
+    height: 104px;
+    margin: 8px auto;
+    align-items: flex-start;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background: @notice_background;
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 16px;
+    color: white;
 }
 
 option {
@@ -239,7 +257,7 @@ select {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    width: 1080px;
+    width: @width;
     margin: 0 auto;
 
     input {
@@ -600,6 +618,6 @@ button {
 }
 
 #content_container {
-    width: 1080;
+    width: @width;
     margin: 0 auto;
 }
