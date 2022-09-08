@@ -307,9 +307,24 @@ window.onload = () => {
         // 티어 데이터를 가져온다.
         var tierVal = getCurrentTier() / 10;
 
+        // 실제 보여줄 영웅의 데이터를 담을 배열
+        var currentHeroData = null;
+
+        // currentRoleValue이 0이면 모든 영웅을 보여준다.
+        if (currentRoleValue == 0) {
+            currentHeroData = heroData;
+        } else {
+            currentHeroData = heroData.filter(item =>
+                item['lane_role_1'] == currentRoleValue ||
+                item['lane_role_2'] == currentRoleValue ||
+                item['lane_role_3'] == currentRoleValue);
+        }
+
+        console.log(currentHeroData);
+
         // 영웅 데이터만큼 반복
-        for (let i = 0; i < heroData.length; i++) {
-            const hero = heroData[i];
+        for (let i = 0; i < currentHeroData.length; i++) {
+            const hero = currentHeroData[i];
 
             var totalCount = match[`${tierVal}_pick`];
             var winCount = hero[`${tierVal}_win`];
@@ -341,8 +356,14 @@ window.onload = () => {
                 var activeButton = roleList.getElementsByClassName('role_active')[0];
                 if (activeButton) activeButton.classList.remove('role_active');
                 element.classList.add('role_active');
+
+                selectRole(i)
+                bindToMainHeroes()
             });
         }
+
+        // currentRoleValue 값에 따라 roleButtons[i]의 클래스를 설정한다.
+        roleButtons[currentRoleValue].classList.add('role_active');
     }
 
     function init() {

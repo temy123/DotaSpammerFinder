@@ -189,9 +189,9 @@ def calculate_lane_roles(hero_df):
             lane_roles = get_lane_roles(hero_id)
 
         # lane_roles 데이터프레임을 hero_df에 hero_id 기준으로 lane_role1, lane_role2, lane_role3 컬럼에 추가
-        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_1'] = lane_roles['lane_role_1'].values[0]
-        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_2'] = lane_roles['lane_role_2'].values[0]
-        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_3'] = lane_roles['lane_role_3'].values[0]
+        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_1'] = lane_roles.iloc[0]['lane_role_1']
+        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_2'] = lane_roles.iloc[0]['lane_role_2']
+        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_3'] = lane_roles.iloc[0]['lane_role_3']
 
         time.sleep(0.5)
 
@@ -380,6 +380,9 @@ if __name__ == '__main__':
 
     # 각종 DB 생성
     create_db()
+
+    # df = pd.read_sql_query('select * from Hero', open_db())
+    # print(df)
 
     # # 이미지 다운로드
     # df = pd.read_sql_query('select * from Hero', open_db())
