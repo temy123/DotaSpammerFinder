@@ -1,119 +1,74 @@
 const URL_HERO_IMG = `https://api.opendota.com`
+const ARRAY_ROLE_INFO = [{
+        name: '캐리',
+        val: 1
+    },
+    {
+        name: '미드',
+        val: 2
+    },
+    {
+        name: '오프레이너',
+        val: 3
+    },
+    {
+        name: '서포터',
+        val: 4
+    },
+    {
+        name: '하드 서포터',
+        val: 5
+    },
+];
 const ARRAY_RANK_INFO = [{
-        name: "Immortal+",
-        val: 80
-    }, {
-        name: "Divine+",
-        val: 70
-    }, {
-        name: "Ancient+",
-        val: 60
-    }, {
-        name: "Legend+",
-        val: 50
-    }, {
-        name: "Arcorn+",
-        val: 40
-    }, {
-        name: "Crusader+",
-        val: 30
-    }, {
-        name: "Guardian+",
-        val: 20
-    }, {
-        name: "Herald+",
-        val: 10
-    }, ],
-    ARRAY_PATCH_INFO = [{
-            name: "7.32 [22.08.24일 추가]",
-            val: 51
-        }, {
-            name: "7.31",
-            val: 50
-        },
-        // {
-        //     name: "7.30",
-        //     val: 49
-        // }, {
-        //     name: "7.29",
-        //     val: 48
-        // }, {
-        //     name: "7.28",
-        //     val: 47
-        // }, {
-        //     name: "7.27",
-        //     val: 46
-        // }, {
-        //     name: "7.26",
-        //     val: 45
-        // }, {
-        //     name: "7.25",
-        //     val: 44
-        // }, {
-        //     name: "7.24",
-        //     val: 43
-        // }, {
-        //     name: "7.23",
-        //     val: 42
-        // }, {
-        //     name: "7.22",
-        //     val: 41
-        // }, {
-        //     name: "7.21",
-        //     val: 40
-        // }, {
-        //     name: "7.20",
-        //     val: 39
-        // }, 
-    ]
+    name: "Immortal+",
+    val: 80
+}, {
+    name: "Divine+",
+    val: 70
+}, {
+    name: "Ancient+",
+    val: 60
+}, {
+    name: "Legend+",
+    val: 50
+}, {
+    name: "Arcorn+",
+    val: 40
+}, {
+    name: "Crusader+",
+    val: 30
+}, {
+    name: "Guardian+",
+    val: 20
+}, {
+    name: "Herald+",
+    val: 10
+}, ];
+
+ARRAY_PATCH_INFO = [{
+    name: "7.32 [22.08.24일 추가]",
+    val: 51
+}, {
+    name: "7.31",
+    val: 50
+}, ]
 
 var currentTierValue = ARRAY_RANK_INFO[0].val;
 var currentPatchValue = ARRAY_PATCH_INFO[0].val;
+var currentRoleValue = ARRAY_ROLE_INFO[0].val;
+
+// 영웅 데이터가 담긴 배열 선언
+var heroDataArray = [];
+
+// 매치 기록이 담긴 배열 선언
+var matchDataArray = [];
+
+// SQL 정보
+var sql = null;
+var sql_model = null;
 
 window.onload = () => {
-    var sql = null;
-    var sql_model = null;
-    // Local 에 있는 DB 데이터 가져오기
-    function getLocalDbData() {
-        return new Promise((resolve, reject) => {
-            var xhr = new XMLHttpRequest();
-            xhr.open('get', '/db/od.db', true);
-            xhr.responseType = 'arraybuffer';
-
-            xhr.onload = (e) => {
-                var array = new Uint8Array(xhr.response);
-                resolve({
-                    'data': xhr.response,
-                    'array': array
-                });
-            }
-            xhr.send();
-        })
-    }
-
-    function calculateTier(pick_rate, win_rate) {
-
-    }
-
-    function initSql() {
-        var config = {
-            locateFile: filename => `/dist/${filename}`
-        };
-
-        return initSqlJs(config)
-            .then(function (SQL) {
-                sql = SQL;
-                return getLocalDbData()
-            })
-            .then(data => {
-                sql_model = new sql.Database(data['array']);
-                return sql_model;
-            });
-    }
-
-    function getHeroSpammerIdURL(hero_id) {
-        return getSearchPageURL(hero_id, getCurrentPatch(), getCurrentTier(), 55, 20, true);
-    }
 
     function appendNavHero(a, img_src, name) {
         html = `<li><a href="${a}" target="_blank" class="css-mtyeel e1y3xkpj0"><img src="${img_src}" width="46" alt="garen" height="46"><span>${name}</span></a></li>`
@@ -140,46 +95,16 @@ window.onload = () => {
         });
     }
 
-    function getSearchPageURL(id, patchVersion, rank, winrate, minPlayedCount, unranked) {
-        return `search.html?id=${id}&patchVersion=${patchVersion}&rank=${rank}&winrate=${winrate}&minPlayedCount=${minPlayedCount}&unranked=${unranked}`
-    }
-
-    function bindHeroContainer() {
+    function bindToNavHeroes() {
         document.getElementById('navHeroContainer').innerHTML = '';
-        document.getElementById('mainHeroContainer').innerHTML = '';
 
-        var heroes = sql_model.prepare('select * from Hero');
-        var matches = sql_model.prepare('select * from Matches');
-        matches.step()
-
-        var matchData = matches.getAsObject();
-
-        var tierVal = getCurrentTier() / 10;
-
-        while (heroes.step()) {
-            var heroData = heroes.getAsObject();
-
+        // 영웅 데이터만큼 반복
+        for (var i = 0; i < heroDataArray.length; i++) {
+            var heroData = heroDataArray[i];
             var heroDetailUrl = `https://www.dota2.com/hero/${heroData['localized_name'].replace(' ', '')}?l=koreana`;
-            var winRate = ((heroData[`${tierVal}_win`] / heroData[`${tierVal}_pick`]) * 100).toFixed(1);
-            var pickRate = ((heroData[`${tierVal}_pick`] / matchData[`${tierVal}_pick`]) * 1000).toFixed(1);
 
             appendNavHero(heroDetailUrl, `img/heroes/${heroData['real_name']}.png`, heroData['localized_name_kor']);
-            appendMainHero(heroData['hero_id'], `img/heroes/${heroData['real_name']}.png`, heroData['localized_name_kor'], heroData[`${tierVal}_tier`], pickRate, winRate, '-', '준비중');
         }
-
-        heroes.free();
-        matches.free();
-
-        // 티어 순으로 정렬
-        sort_table(2, true);
-    }
-
-    function getCurrentTier() {
-        return currentTierValue;
-    }
-
-    function getCurrentPatch() {
-        return currentPatchValue;
     }
 
     function selectTier(value) {
@@ -223,7 +148,7 @@ window.onload = () => {
             var container = document.getElementsByClassName('tier_container')[0];
             container.parentElement.removeChild(container);
 
-            bindHeroContainer();
+            bindToNavHeroes();
         };
 
         btnRank.addEventListener('click', (ev) => {
@@ -350,28 +275,145 @@ window.onload = () => {
         bindDropDownPatch();
     }
 
-    function getSessionData() {
-        if (sessionStorage.getItem('tier')) {
-            currentTierValue = sessionStorage.getItem('tier');
+    function bindToMainHeroes() {
+        document.getElementById('mainHeroContainer').innerHTML = '';
+
+        // 영웅 데이터를 가져온다.
+        var heroData = heroDataArray;
+        // 매치 데이터를 가져온다.
+        var match = matchDataArray[0];
+        // 티어 데이터를 가져온다.
+        var tierVal = getCurrentTier() / 10;
+
+        // 영웅 데이터만큼 반복
+        for (let i = 0; i < heroData.length; i++) {
+            const hero = heroData[i];
+
+            var totalCount = match[`${tierVal}_pick`];
+            var winCount = hero[`${tierVal}_win`];
+            var pickedCount = hero[`${tierVal}_pick`];
+
+            // 승률을 계산해서 1자리수까지 표시하도록 한다.
+            var winRate = (winCount / pickedCount * 100).toFixed(1);
+
+            // 픽률을 계산해서 1자리수까지 표시하도록 한다.
+            var pickRate = (pickedCount / totalCount * 1000).toFixed(1);
+
+            appendMainHero(hero['hero_id'], `img/heroes/${hero['real_name']}.png`, hero['localized_name_kor'], hero[`${tierVal}_tier`], pickRate, winRate, '-', '준비중');
         }
 
-        if (sessionStorage.getItem('patch')) {
-            currentPatchValue = sessionStorage.getItem('patch');
-        }
+        // 티어 순으로 정렬
+        sort_table(2, true);
     }
+
 
     function init() {
         initSql().then((model) => {
             getSessionData();
 
-            bindHeroContainer();
-            bindDropdown();
-            bindTableClickTags();
+            // 영웅데이터와 매치데이터를 불러오고 끝나면 테이블을 그린다.
+            Promise.all([getHeroData(model), getMatchData(model)]).then((values) => {
+                bindToNavHeroes();
+                bindToMainHeroes();
+                bindDropdown();
+                bindTableClickTags();
 
-            selectTier(currentTierValue);
-            selectPatch(currentPatchValue);
+                selectTier(currentTierValue);
+                selectPatch(currentPatchValue);
+            });
         });
     }
 
     init();
+}
+
+
+
+// sql에서 데이터를 가져와서 heroDataArray에 넣는다.
+function getHeroData() {
+    return new Promise((resolve, reject) => {
+        var stmt = sql_model.prepare("select * from Hero");
+        while (stmt.step()) {
+            var row = stmt.getAsObject();
+            heroDataArray.push(row);
+        }
+
+        stmt.free();
+        resolve();
+    })
+}
+
+// sql에서 매치 데이터를 가져와서 matchDataArray에 넣는다.
+function getMatchData() {
+    return new Promise((resolve, reject) => {
+        var stmt = sql_model.prepare("select * from Matches");
+        while (stmt.step()) {
+            var row = stmt.getAsObject();
+            matchDataArray.push(row);
+        }
+
+        stmt.free();
+        resolve();
+    })
+}
+
+
+function getSessionData() {
+    if (sessionStorage.getItem('tier')) {
+        currentTierValue = sessionStorage.getItem('tier');
+    }
+
+    if (sessionStorage.getItem('patch')) {
+        currentPatchValue = sessionStorage.getItem('patch');
+    }
+}
+
+// Local 에 있는 DB 데이터 가져오기
+function getLocalDbData() {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', '/db/od.db', true);
+        xhr.responseType = 'arraybuffer';
+
+        xhr.onload = (e) => {
+            var array = new Uint8Array(xhr.response);
+            resolve({
+                'data': xhr.response,
+                'array': array
+            });
+        }
+        xhr.send();
+    })
+}
+
+function initSql() {
+    var config = {
+        locateFile: filename => `/dist/${filename}`
+    };
+
+    return initSqlJs(config)
+        .then(function (SQL) {
+            sql = SQL;
+            return getLocalDbData()
+        })
+        .then(data => {
+            sql_model = new sql.Database(data['array']);
+            return sql_model;
+        });
+}
+
+function getHeroSpammerIdURL(hero_id) {
+    return getSearchPageURL(hero_id, getCurrentPatch(), getCurrentTier(), 55, 20, true);
+}
+
+function getCurrentTier() {
+    return currentTierValue;
+}
+
+function getSearchPageURL(id, patchVersion, rank, winrate, minPlayedCount, unranked) {
+    return `search.html?id=${id}&patchVersion=${patchVersion}&rank=${rank}&winrate=${winrate}&minPlayedCount=${minPlayedCount}&unranked=${unranked}`
+}
+
+function getCurrentPatch() {
+    return currentPatchValue;
 }
