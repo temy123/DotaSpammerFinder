@@ -1,25 +1,35 @@
 const URL_HERO_IMG = `https://api.opendota.com`
 const ARRAY_ROLE_INFO = [{
+        name: '전체',
+        img: '',
+        val: 0
+    }, {
         name: '캐리',
+        img: 'img/icon_carry.jpg',
         val: 1
     },
     {
         name: '미드',
+        img: 'img/icon_nuker.jpg',
         val: 2
     },
     {
         name: '오프레이너',
+        img: 'img/icon_duration.jpg',
         val: 3
     },
     {
         name: '서포터',
+        img: 'img/icon_support.jpg',
         val: 4
     },
     {
         name: '하드 서포터',
+        img: 'img/icon_jungler.jpg',
         val: 5
     },
 ];
+
 const ARRAY_RANK_INFO = [{
     name: "Immortal+",
     val: 80
@@ -134,6 +144,18 @@ window.onload = () => {
         sessionStorage.setItem('patch', value);
         currentPatchValue = value;
     }
+
+    // 롤 선택
+    function selectRole(value) {
+        // role_list 클래스를 가진 태그 가져오기
+        var roleList = document.getElementsByClassName('role_list')[0];
+
+        roleList.setAttribute('value', value);
+
+        sessionStorage.setItem('role', value);
+        currentRoleValue = value;
+    }
+
 
     function getTierIconSrc(value) {
         return `img/rank_icon_${value/10}.png`;
@@ -306,6 +328,22 @@ window.onload = () => {
         sort_table(2, true);
     }
 
+    function initRoleButtons() {
+        // 'role_list' 라는 클래스를 가진 태그 안에 button 태그들을 찾는다.
+        var roleList = document.getElementsByClassName('role_list')[0];
+        var roleButtons = roleList.getElementsByTagName('button');
+
+        // 클릭 된 버튼에 active 클래스를 추가하고 id 를 설정한다
+        for (let i = 0; i < roleButtons.length; i++) {
+            const element = roleButtons[i];
+            element.setAttribute('id', `btn_role_${i}`);
+            element.addEventListener('click', (ev) => {
+                var activeButton = roleList.getElementsByClassName('role_active')[0];
+                if (activeButton) activeButton.classList.remove('role_active');
+                element.classList.add('role_active');
+            });
+        }
+    }
 
     function init() {
         initSql().then((model) => {
@@ -313,6 +351,8 @@ window.onload = () => {
 
             // 영웅데이터와 매치데이터를 불러오고 끝나면 테이블을 그린다.
             Promise.all([getHeroData(model), getMatchData(model)]).then((values) => {
+                initRoleButtons();
+
                 bindToNavHeroes();
                 bindToMainHeroes();
                 bindDropdown();
