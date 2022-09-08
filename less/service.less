@@ -2,8 +2,10 @@
 
 @text: rgb(49, 49, 60);
 @background: #31313C;
+@border_color: #424254;
 @width: 1080px;
 @notice_background: rgb(25, 186, 255);
+@accent: #5383E8;
 
 html {
     font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Dotum, Roboto, sans-serif;
@@ -27,9 +29,18 @@ html {
     background: @background;
 
     nav {
+        width: 100%;
         vertical-align: middle;
         display: flex;
+        justify-content: space-between;
         box-sizing: border-box;
+
+        div {
+            // 세로 중앙 정렬
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+        }
     }
 }
 
@@ -300,11 +311,6 @@ select {
     background-color: #31313C;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
-}
-
-button {
-    width: 100%;
-    min-width: 150px;
 }
 
 aside {
@@ -624,4 +630,110 @@ button {
 #content_container {
     width: @width;
     margin: 0 auto;
+}
+
+
+.role_container {
+    height: 100%;
+}
+
+.role_list {
+    height: 100%;
+
+    margin-right: 8px;
+
+    display: flex;
+    flex-direction: row;
+    vertical-align: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    border: @border_color 1px solid;
+    border-radius: 4px;
+
+    button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
+        width: 105px;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 11pt;
+        line-height: 16px;
+        font-weight: normal;
+        color: white;
+        background: #FFF;
+        background: #31313C;
+        box-sizing: border-box;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: all 0.2s ease-in-out;
+        -webkit-transition: all 0.2s ease-in-out;
+        -moz-transition: all 0.2s ease-in-out;
+        -o-transition: all 0.2s ease-in-out;
+        -ms-transition: all 0.2s ease-in-out;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+        -o-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        -webkit-font-feature-settings: "liga";
+        -moz-font-feature-settings: "liga";
+        -ms-font-feature-settings: "liga";
+        -o-font-feature-settings: "liga";
+        font-feature-settings: "liga";
+        -webkit-font-kerning: normal;
+        -moz-font-kerning: normal;
+        -ms-font-kerning: normal;
+        -o-font-kerning: normal;
+        font-kerning: normal;
+
+        &:hover {
+            background: #1C1C1F;
+        }
+
+        &:active {
+            background: @accent;
+            font-weight: bold;
+        }
+
+        img {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+    }
+
+    // padding-left: 12px;
+    // padding-right: 12px;
+
+    // border: @border_color 1px solid;
+
+    // // flex 일정 크기로 배치
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: space-between;
+    // align-items: center;
+
+    // padding: 2px;
+    // font-weight: bold;
+    // color: white;
+    // font-size: 12pt;
 }
