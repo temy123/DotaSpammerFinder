@@ -148,7 +148,7 @@ window.onload = () => {
             var container = document.getElementsByClassName('tier_container')[0];
             container.parentElement.removeChild(container);
 
-            bindToNavHeroes();
+            bindToMainHeroes();
         };
 
         btnRank.addEventListener('click', (ev) => {
