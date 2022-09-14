@@ -129,8 +129,6 @@ def insert_hero_data(id_, name, localized_name_eng, localized_name_kor, primary_
 
 # URL_OPENDOTA_HEROES_LANEROLES 에 접속해서 laneRoles 정보를 가져온다.
 def get_lane_roles(hero_id):
-    print(f"URL: {URL_OPENDOTA_HEROES_LANEROLES}?hero_id={hero_id}")
-
     response = request(
         f"{URL_OPENDOTA_HEROES_LANEROLES}?hero_id={hero_id}")
 
@@ -176,9 +174,9 @@ def get_lane_roles(hero_id):
 
 def calculate_lane_roles(hero_df):
     # lane_role_1, lane_role_2, lane_role_3 컬럼 추가
-    hero_df['lane_role_1'] = ''
-    hero_df['lane_role_2'] = ''
-    hero_df['lane_role_3'] = ''
+    hero_df['lane_role_1'] = 0
+    hero_df['lane_role_2'] = 0
+    hero_df['lane_role_3'] = 0
 
     for i, hero_id in hero_df['id_x'].iteritems():
         lane_roles = get_lane_roles(hero_id)
@@ -382,7 +380,24 @@ if __name__ == '__main__':
     create_db()
 
     # df = pd.read_sql_query('select * from Hero', open_db())
+    # # df 에서 lane_role_1 컬럼 삭제
+    # df.drop('lane_role_1', axis=1, inplace=True)
+    # # df 에서 lane_role_2 컬럼 삭제
+    # df.drop('lane_role_2', axis=1, inplace=True)
+    # # df 에서 lane_role_3 컬럼 삭제
+    # df.drop('lane_role_3', axis=1, inplace=True)
+    #
+    # df = calculate_lane_roles(df)
+    #
+    # # df 에 lane_role_1 컬럼 타입 string 으로 변경
+    # df['lane_role_1'] = df['lane_role_1'].astype(str)
+    #
+    # # df 에 lane_role_1 컬럼 타입 출력
+    # print(df['lane_role_1'].dtype)
+    #
     # print(df)
+    #
+    # df.to_sql('Hero', open_db(), if_exists='replace')
 
     # # 이미지 다운로드
     # df = pd.read_sql_query('select * from Hero', open_db())
