@@ -255,20 +255,48 @@ window.onload = () => {
 
         var direction = (currentState == 'desc') ? 1 : -1;
 
-        var rows = Array.prototype.slice.call(childrens, 0);
-        rows.sort((row1, row2) => {
+        // 1차로 전달 받은 값으로 정렬하고 2차로 픽률 순으로 정렬
+        var rows = Array.prototype.slice.call(childrens, 0)
+        rows.sort(function (row1, row2) {
             var cell1 = row1.getElementsByTagName('td')[i];
             var cell2 = row2.getElementsByTagName('td')[i];
-            var val1 = cell1.textContent || cell1.innerText;
-            var val2 = cell2.textContent || cell2.innerText;
-            val1 = val1.replace('%', '');
-            val2 = val2.replace('%', '');
-            if (Number(val1)) val1 = Number(val1);
-            if (Number(val2)) val2 = Number(val2);
-            if (val1 < val2) return direction;
-            if (val1 > val2) return direction * -1;
-            return 0;
+
+            var aVal = (cell1.textContent || cell1.innerText).replace('%', '');
+            var bVal = (cell2.textContent || cell2.innerText).replace('%', '');
+
+            if (Number(aVal)) aVal = Number(aVal);
+            if (Number(bVal)) bVal = Number(bVal);
+
+            // 2차 정렬 (픽률 순)
+            if (aVal == bVal) {
+
+                cell1 = row1.getElementsByTagName('td')[4];
+                cell2 = row2.getElementsByTagName('td')[4];
+
+                var aaVal = (cell1.textContent || cell1.innerText).replace('%', '');
+                var bbVal = (cell2.textContent || cell2.innerText).replace('%', '');
+
+                return (aaVal > bbVal) ? direction : (aaVal < bbVal) ? -direction : 0;
+            }
+
+            return (aVal > bVal) ? -direction : (aVal < bVal) ? direction : 0;
         });
+
+
+        // var rows = Array.prototype.slice.call(childrens, 0);
+        // rows.sort((row1, row2) => {
+        //     var cell1 = row1.getElementsByTagName('td')[i];
+        //     var cell2 = row2.getElementsByTagName('td')[i];
+        //     var val1 = cell1.textContent || cell1.innerText;
+        //     var val2 = cell2.textContent || cell2.innerText;
+        //     val1 = val1.replace('%', '');
+        //     val2 = val2.replace('%', '');
+        //     if (Number(val1)) val1 = Number(val1);
+        //     if (Number(val2)) val2 = Number(val2);
+        //     if (val1 < val2) return direction;
+        //     if (val1 > val2) return direction * -1;
+        //     return 0;
+        // });
 
         rows.forEach(element => {
             container.appendChild(element);
