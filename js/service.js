@@ -282,22 +282,6 @@ window.onload = () => {
             return (aVal > bVal) ? -direction : (aVal < bVal) ? direction : 0;
         });
 
-
-        // var rows = Array.prototype.slice.call(childrens, 0);
-        // rows.sort((row1, row2) => {
-        //     var cell1 = row1.getElementsByTagName('td')[i];
-        //     var cell2 = row2.getElementsByTagName('td')[i];
-        //     var val1 = cell1.textContent || cell1.innerText;
-        //     var val2 = cell2.textContent || cell2.innerText;
-        //     val1 = val1.replace('%', '');
-        //     val2 = val2.replace('%', '');
-        //     if (Number(val1)) val1 = Number(val1);
-        //     if (Number(val2)) val2 = Number(val2);
-        //     if (val1 < val2) return direction;
-        //     if (val1 > val2) return direction * -1;
-        //     return 0;
-        // });
-
         rows.forEach(element => {
             container.appendChild(element);
         });
