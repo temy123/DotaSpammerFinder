@@ -4,7 +4,8 @@ import datetime
 import main
 import pandas as pd
 
-if __name__ == "__main__":
+
+def update():
     path = os.path.dirname(os.path.dirname(__file__))
     path = os.path.join(path, 'db')
 
@@ -42,7 +43,10 @@ if __name__ == "__main__":
     with open('update.log', 'a') as f:
         f.write(f"{date_string} Created\n")
 
-    os.system('cd ..')
     os.system('git add --all')
     os.system(f"git commit -m \"{date_string} DB Updated\"")
     os.system(f"git push origin master")
+
+
+if __name__ == "__main__":
+    update()
