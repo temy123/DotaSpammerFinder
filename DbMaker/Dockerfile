@@ -5,7 +5,11 @@ COPY /../ /app
 WORKDIR /app/DbMaker
 
 RUN apt-get -yq update && \
-    apt-get -yqq install ssh
+    apt-get -yqq install ssh \
+    apt-get -yqq install git \
+
+RUN git config --global user.email "auto_update@g.kr"
+RUN git config --global user.name "auto_update"
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
