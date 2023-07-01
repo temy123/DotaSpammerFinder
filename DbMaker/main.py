@@ -178,7 +178,7 @@ def calculate_lane_roles(hero_df):
     hero_df['lane_role_2'] = 0
     hero_df['lane_role_3'] = 0
 
-    for i, hero_id in hero_df['id_x'].iteritems():
+    for i, hero_id in hero_df['id_x'].items():
         lane_roles = get_lane_roles(hero_id)
         # lane_roles 가 None 이면 60초 후 다시 시도
         if lane_roles is None:
@@ -236,7 +236,7 @@ def get_hero_stats():
     result.drop('roles', axis='columns', inplace=True)
 
     real_name_list = []
-    for i, item in result['img'].iteritems():
+    for i, item in result['img'].items():
         real_name = item.split('/')
         real_name = real_name[len(real_name) - 1]
         real_name_list.append(real_name.replace('.png?', ''))
