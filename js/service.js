@@ -57,6 +57,9 @@ const ARRAY_RANK_INFO = [{
 }, ];
 
 ARRAY_PATCH_INFO = [{
+    name: "7.34",
+    val: 53
+}, {
     name: "7.33",
     val: 52
 }, {
