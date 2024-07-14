@@ -213,7 +213,13 @@ def get_official_heroes_list():
 
 def get_opendota_heroes_list():
     response = request(URL_OPENDOTA_HERO_LIST)
-    return response.json()
+    response = response.json()
+    new_response = []
+    for item in response:
+        item["hero_id"] = item["id"]
+        new_response.append(item)
+
+    return json.loads(json.dumps(new_response))
 
 
 def get_hero_stats():
@@ -234,6 +240,10 @@ def get_hero_stats():
     }, inplace=True)
 
     result.drop('roles', axis='columns', inplace=True)
+    result.drop('turbo_picks_trend', axis='columns', inplace=True)
+    result.drop('turbo_wins_trend', axis='columns', inplace=True)
+    result.drop('pub_pick_trend', axis='columns', inplace=True)
+    result.drop('pub_win_trend', axis='columns', inplace=True)
 
     real_name_list = []
     for i, item in result['img'].iteritems():
