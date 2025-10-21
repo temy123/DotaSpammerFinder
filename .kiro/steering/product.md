@@ -1,16 +1,16 @@
 # Product Vision
 
-DotaSpammerFinder is a web-based tool designed to help Dota 2 players identify and analyze player behavior, specifically focusing on "spammers"—players who repeatedly pick the same hero. The goal is to provide users with clear, actionable insights into player patterns, hero popularity, and match statistics to enhance their gaming experience and strategy.
+DotaSpammerFinder는 도타 2 플레이어들이 특정 영웅을 반복적으로 플레이하는 "스패머"를 식별하고 분석할 수 있도록 돕는 웹 애플리케이션입니다. 사용자들은 플레이어 ID를 입력하여 해당 플레이어의 게임 기록을 검색하고, 특정 영웅 플레이 빈도, 승률, KDA 등의 통계를 시각적으로 확인할 수 있습니다. 이를 통해 플레이어들은 게임 전략을 분석하고, 상대방의 플레이 스타일을 파악하며, 커뮤니티 내에서 흥미로운 정보를 공유할 수 있습니다.
+
+## Features
+
+- **플레이어 검색**: 사용자는 플레이어의 ID를 입력하여 전적을 검색할 수 있습니다.
+- **영웅 스팸 분석**: 특정 플레이어가 자주 사용하는 영웅과 관련 통계(플레이 횟수, 승률, KDA 등)를 분석하여 보여줍니다.
+- **시각적 데이터**: 분석 결과를 차트나 테이블 형태로 시각화하여 제공합니다.
+- **영웅 정보**: 도타 2의 공식 영웅 데이터를 기반으로 한 정보를 제공합니다.
 
 ## Target Audience
 
--   **Dota 2 Players:** Casual to competitive players who want to research opponents, analyze their own play style, or understand the current meta.
--   **Data Analysts:** Individuals interested in Dota 2 match data for statistical analysis and research.
-
-## Key Features
-
--   **Player Search:** Users can search for any Dota 2 player using their account ID to retrieve their match history and performance data.
--   **Match History Analysis:** The tool fetches and displays a player's recent match history, including heroes played, win/loss outcomes, and other relevant statistics.
--   **Spammer Identification:** The core feature highlights players who frequently pick the same heroes, providing detailed statistics on their most-played heroes, win rates, and frequency.
--   **Hero Performance Statistics:** Displays win/loss records for individual heroes, allowing users to see a player's proficiency with specific characters.
--   **User-Friendly Web Interface:** A clean, intuitive, and responsive interface accessible from any modern web browser, ensuring a seamless user experience.
+- **도타 2 플레이어**: 자신의 플레이 패턴을 분석하거나 다른 플레이어의 스타일을 연구하고 싶은 모든 도타 2 플레이어.
+- **전략 분석가**: 특정 영웅이나 플레이 스타일에 대한 깊이 있는 분석을 원하는 사용자.
+- **도타 2 커뮤니티**: 게임 내 흥미로운 통계나 플레이어를 찾아 공유하고 싶은 커뮤니티 구성원.

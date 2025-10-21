@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>[짱고는 못말려] 스패머 찾기</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+
+    <!-- SQL.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.7.0/sql-wasm.min.js"></script>
+    <!-- Main JavaScript -->
+
+    <!-- Bootstrap CSS -->
+    <script type="module" crossorigin src="./assets/service-BzlsxY_y.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/default-CIqDDot3.js">
+    <link rel="stylesheet" crossorigin href="./assets/default-CNvQd13i.css">
+    <link rel="stylesheet" crossorigin href="./assets/service-DsjojUo-.css">
+  </head>
+
+  <body style="background-color: #1c1c1f">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="./assets/img_logo_white-B7SWl04y.png" style="height: 30px; padding-right: 10px;" />
+                도타 스패머 파인더
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="search.html">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="service.html">Service
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content-container" class="">
+      <div class="notice">
+        <div>
+          <span>
+            <strong>[24-07-15] 7.36 추가 </strong>
+          </span>
+        </div>
+        <div class="notice_content">
+          <span>
+            늦은 업데이트 죄송합니다 ㅠ 7.36와 최신 데이터로 업데이트했습니다
+          </span>
+        </div>
+      </div>
+
+      <!-- Top Container -->
+      <div class="top_container">
+        <nav>
+          <div>
+            <!-- 티어 DropDown  -->
+            <div class="dropdown_">
+              <label class="hidden" for="rank">불멸자 [Immortal]</label>
+              <select id="rank">
+                <option class="option" value="80">불멸자 [Immortal]</option>
+                <option class="option" value="70">신 [Divine]</option>
+                <option class="option" value="60">거장 [Ancient]</option>
+                <option class="option" value="50">전설 [Legend]</option>
+                <option class="option" value="40">집정관 [Arcorn]</option>
+                <option class="option" value="30">성전사 [Crusader]</option>
+                <option class="option" value="20">수호자 [Guardian]</option>
+                <option class="option" value="10">선구자 [Herald]</option>
+              </select>
+            </div>
+            <!-- 티어 DropDown  -->
+            <!-- 티어 -->
+            <div class="button_container">
+              <div id="div_tier" style="display: block">
+                <button id="btn_rank" type="button" class="button_default">
+                  <img
+                    src="./assets/rank_icon_8-DMkWoh9x.png"
+                    width="24"
+                    alt=""
+                    height="24"
+                  />
+                  <span>Immortal+</span>
+                </button>
+              </div>
+            </div>
+            <!-- 티어 -->
+
+            <!-- 패치 버전 -->
+            <div class="button_container">
+              <div id="div_patch" style="display: block">
+                <button id="btn_patch" type="button" class="button_default">
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <!-- 패치 버전 -->
+
+            <!-- DB 버전 -->
+            <div class="button_container">
+              <div id="div_db" style="display: block">
+                <button id="btn_db" type="button" class="button_default">
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <!-- DB 버전 -->
+          </div>
+
+          <div>
+            <div class="role_container">
+              <div class="role_list">
+                <button>
+                  <span>전체</span>
+                </button>
+                <button>
+                  <img src="data:image/jpeg;base64,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" width="24" alt="" height="24" />
+                  <span>세이프 레인</span>
+                </button>
+                <button>
+                  <img src="data:image/jpeg;base64,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" width="24" alt="" height="24" />
+                  <span>미드</span>
+                </button>
+                <button>
+                  <img
+                    src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAIi0lEQVRYhaWXXWgc1xXHf+fO7OysdqW1JFuyYjVxbMcmTUwbYoptQqANfmihD3lpaQIJNKUUCu17ICF57UMgj8l7W+gHhfaxHxQCsdtC2jSxXTuyItn6WO1K+z07n/eePuzKcW2nTejAzCw7l3t+55x77vlf4XNeXw8Cv6dajZyrrFrrF4BC4SC2EAHF55lPPsugb1cqXu7c8o5zZ7etPWdVTxlYGKjW7HjI0EHTwTULFwu4lMEGYL3/B+DFalWup+lJhecy1Wd7zp0oVCs+4N8xThm77UQA4gxWSiK/EfjZmnPXvfGQzwfgQ7Uu8p0Z+HEAXyyBCVQpAaUJwD5EDngi1IxhqEofsODaqlfaqm+m8PNJeu657huhMixU4LWqyMs1WH5ARI4YQxWoAtPAAeD84cMcnaoSRxEHjWFKhMS5fTjJYSGHZxRmBd67H8Q9AE+VSgse/KQMLx2CcFGEh43BUyVQpTYBOOl5PPnC96jOH8Rc/RAjggBOFQ8oiexPHlg4o3AYePduiP8AeNTzqgdEXquJvBSq+nWgDkyL4Kve9nwZOPnEGfrf/SGdfpcjN67hRdF+6m6nRgAz/mkKeNxCaOEdHWftXoAAXpwWebmkGpZVmQFqQEWVGVUWgFNhyPGnnmb3he8zXDxCunqdzAhHVJkbDvGsHRueRIQJhILJ4bQnslnAe3o3QAVOGXijpLpcVqWqyiHgELAEPFKt8vgTT7L8gx8xeO4ldmt1bLtFtPoR3SRhb+4gfqXC4SxjrsipOEcggg9k+xERCYBjU8b8KVLd248YgPHh+TI8VlIlAL4QBJx/8ivUq9PMLS9TO/sU2RNnaVWrBOWQ6toNrq1eZ7vbJkxiygqdxQdwpYCFzh5zgwFH05RDKF6vD86iQAKPFarPf6tSee0Xcexk4v1DFfjdPJxeBOaBc8sPcuyNt5GHH8HHMXPgAL5XYtDv0t3dobG1xpdOHaO5tcmff/lrXKOBbx3JKIIsZ3pqimQUMVsqUV+5xofdLi0RNgFP5IO6533zL3m+7k9ydLYEJ6aAcJL38tw8V3s9FoZDKmLptvdIRgOqvrK4OM/ZL19gplZj4+BB6rUa71+8SGvlBtnmJkW3yyjPqFcqzIYhYVCmxnj51wErcmLo3Flg3Qc8D84FUCkD5QmAqUyRO8uNK+/Tbzc5cfIEZ04/yiNHlqhNVcnynFEUEXU7HJib5fyFC4zOn6fTatJttti6eg1z5QqZQtXzCSfOVYA91UoHzln4lR9ATeBkaWK8KsK0KmVbUIyGjIZDAl/4xoWvsVyfxlqLdQ5Vpchz0jgmrIRkaUqeZxw4dIi5pSW0cDQ/WkHV4aG3yzOYvGsiJ5eMqfkGKgYWfSAUoSpCqEo4iqikCXgGLRkMirWWLMvwfG+yqscPay1JmhBFEYhQLof4pQAtlfDTlFLxSYP0AV+VKZHFkjEVX8AXqO3TGcAB0uvixSOoTkMW0x4MqZUDKAqyfNyEnVOcc2RphrUWVcVZS+HleICo4tsCL0tRQFVREUIRIpFa2znf7JPtbxxWlQSwvR61QQ8pBRRpRnOnySDJsNaR5TlxHJNlKXmWEkXD2wBFUaAKcbtNmqYESYJJEhhvRgjjbbrjHC3nMAqFwlBVcUA6rlXiJKa2s41Vh+cH48UVJ4yKgtxa4rxgmCQkcUI8GpFnGVmaUhQFNkkZfLyG53sEwwFJniPjVk0BtJyj59xQoDAWYgc7VgQL5KrkQL8oqK6uEDiLF04x6A9pDEe0kozUWTIgzgtGoxF5npOmKWma4nkeo60tbLfDVDlkqtuh5xzxZN6RKpEqFnYUYpOP1cz1ZLKqPBEKoAewukK9vYvzS2Rxxmg4pJfljPKCpLDk1pFmKWmSkMQx1loCp3QuX8UTQxBFeN0O/UlkHYydHKfjegZDA1gHF2PVuKeKE8GKEAHtVpOlK//Ec5ak1yccDnFpQjdJGaUJo1HEKIqI45g4jqmUy6RrN+lvbJLlOfWtDfpxzGACYIwhNAYjElu4CFjDmOxSDit7qrScIwJGwI5zVP92iflmg8g5dje3qWYZ6WhElmXkaUoSxyRJggHCKGb7H+/jeYZKv0u4tUFDlRjIRBipYkSYNmZF4dLtbljAwIfDAk/7IGbyIRChNByy6ArWj5/kVn9AmCYszc5gk4RkMKC1vYXNc+Y9n81Lf6XXalJyyoOrKzR2W2xN0tkDdoFIRDN4u6H6W0D327F6sCXwVQML+5pPRBioEjYazPoerYeOc/PWBjros7Qwz7DXZW9nhzCK6V2+yvaNG/giHLm1TnTrJh+7sT7sTwDaQEv1ck/1lXTM84keKGDPg9zBMwYCf1KvFhg4y4GNdeppwkZtmrW1NfIo5qGjx9BOl62LF2msruKjPNjYJr91kxVr6QKDSRNqAx2IEng9hd9P5Pw9mvAaMOvgjIAJRVAR0klZHty8xeF4RG+mzs5gQPvmLQaXP6C5vk7oLEd3GsTbW9y4w3h/HHbaIkUEb2XwZvZpksxC7o3l0uEcHkfEyKRscsbKZm6vxcKgTzEzQydJSLe3qUcDjje26bf3+MhaOncY7wGZMUUPfhrDqxl077R5jyouIDLwroMwh9MZBMX4f8ykPJvdDnONbaaLnOl+l9rGTdYHAzYZz96/47bGRBm81VF9NYHm3fbuey4oxml7x8JmCsdSOJiCuAnELrCVJnRbTQadDh7KQISPraUNpCKUPM+FnncZkddbzr3Zv8vz/wqwn44M/i7wxxw6KcwNYSYXKYkxDEXoA4UxiDF0gJuq7EEci/wrNObtGZFXqsb8oYBMRJi6z/2ZDqcGvDIsGzjrwbmqyKmKyIIZiycS1WEOzUT1WjE5nKawMStijQh7zn3q3J8JYH+gD+TjVzWASlnEz1TJxh015q7j+awI/wvg36dru+Wfbme1AAAAAElFTkSuQmCC"
+                    width="24"
+                    alt=""
+                    height="24"
+                  />
+                  <span>오프 레인</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- Top Container -->
+
+      <!-- Main Container -->
+      <div class="main_container">
+        <!-- 좌측 영웅 자세히 보기 -->
+        <aside>
+          <div class="search">
+            <label class="hidden" for="filterHeroInput"
+              >영웅 검색 (항마사, 등등)</label
+            >
+            <input
+              id="filterHeroInput"
+              type="text"
+              name="filterHeroInput"
+              placeholder="영웅 검색 (항마사, 등등)"
+              autocomplete="off"
+              class="css-1yt1ee4 es47g500"
+              value=""
+            />
+          </div>
+
+          <nav class="navHero">
+            <ul id="navHeroContainer"></ul>
+          </nav>
+        </aside>
+        <!-- 좌측 영웅 자세히 보기 -->
+
+        <!-- 우측 영웅 나열 -->
+
+        <main>
+          <table>
+            <colgroup>
+              <col width="70" />
+              <col width="*" />
+              <col width="64" />
+              <col width="94" />
+              <col width="110" />
+              <col width="94" />
+              <col width="135" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th align="left" scope="col" style="cursor: pointer">순번</th>
+                <th align="left" scope="col" style="cursor: pointer">영웅</th>
+                <th scope="col" order="-1" class="percent_text">티어</th>
+                <th scope="col" order="-1" class="percent_text">승률</th>
+                <th scope="col" order="-1" class="percent_text">픽률</th>
+                <th scope="col" order="-1" class="percent_text">밴률</th>
+                <th scope="col">상대하기 어려운 영웅</th>
+              </tr>
+            </thead>
+
+            <tbody id="mainHeroContainer"></tbody>
+          </table>
+        </main>
+
+        <!-- 우측 영웅 나열 -->
+      </div>
+    </div>
+    <!-- Main Container -->
+  </body>
+</html>

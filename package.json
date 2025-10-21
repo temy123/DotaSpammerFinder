@@ -1,0 +1,28 @@
+{
+  "name": "dotaspammerfinder",
+  "version": "1.0.0",
+  "description": "본 프로젝트는 op.gg 의 디자인 카피 버전으로 해당 사이트를 수익의 명목으로 사용하는 것이 아닌 개인과 일부의 정보 공유를 위한 비상업용 프로젝트 입니다",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite frontend",
+    "build": "vite build frontend",
+    "preview": "vite preview frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/temy123/DotaSpammerFinder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/temy123/DotaSpammerFinder/issues"
+  },
+  "homepage": "https://github.com/temy123/DotaSpammerFinder#readme",
+  "devDependencies": {
+    "less": "^4.4.2",
+    "vite": "^6.4.1",
+    "vite-plugin-static-copy": "^3.1.4"
+  }
+}
