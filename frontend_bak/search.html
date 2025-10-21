@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="kr">
+
+<head>
+    <title>[짱고는 못말려] 스패머 찾기</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+    <script type="module" src="js/core.js"></script>
+    <script type="module" src="js/search.js"></script>
+    
+    <link rel="stylesheet" href="/css/bootstrap_minty.min.css">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="/img/img_logo_white.png" style="height: 30px; padding-right: 10px;" />
+                도타 스패머 파인더
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="search.html">Search
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="service.html">Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section>
+            <div class="top_banner">
+                <div>
+                    <span>
+                        Players
+                    </span>
+                </div>
+            </div>
+            <div class="players_container">
+                <table>
+                    <thead style="background-color: #282830">
+                        <tr>
+                            <th>ID</th>
+                            <th align="left">Player</th>
+                            <th>Rank</th>
+                            <th>Matches</th>
+                            <th>Win</th>
+                            <th>Lose</th>
+                            <th>WinRate</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="bodyPlayers">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
