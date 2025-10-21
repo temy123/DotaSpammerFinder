@@ -1,0 +1,151 @@
+<template>
+  <div id="content-container" class="">
+    <div class="notice">
+      <div>
+        <span>
+          <strong>[24-07-15] 7.36 추가 </strong>
+        </span>
+      </div>
+      <div class="notice_content">
+        <span> 늦은 업데이트 죄송합니다 ㅠ 7.36와 최신 데이터로 업데이트했습니다 </span>
+      </div>
+    </div>
+
+    <!-- Top Container -->
+    <div class="top_container">
+      <nav>
+        <div>
+          <!-- 티어 DropDown -->
+          <div class="dropdown_">
+            <label class="hidden" for="rank">불멸자 [Immortal]</label>
+            <select id="rank">
+              <option class="option" value="80">불멸자 [Immortal]</option>
+              <option class="option" value="70">신 [Divine]</option>
+              <option class="option" value="60">거장 [Ancient]</option>
+              <option class="option" value="50">전설 [Legend]</option>
+              <option class="option" value="40">집정관 [Arcorn]</option>
+              <option class="option" value="30">성전사 [Crusader]</option>
+              <option class="option" value="20">수호자 [Guardian]</option>
+              <option class="option" value="10">선구자 [Herald]</option>
+            </select>
+          </div>
+          <!-- 티어 DropDown -->
+          <!-- 티어 -->
+          <div class="button_container">
+            <div id="div_tier" style="display: block">
+              <button id="btn_rank" type="button" class="button_default">
+                <img src="/img/rank_icon_8.png" width="24" alt="" height="24" />
+                <span>Immortal+</span>
+              </button>
+            </div>
+          </div>
+          <!-- 티어 -->
+
+          <!-- 패치 버전 -->
+          <div class="button_container">
+            <div id="div_patch" style="display: block">
+              <button id="btn_patch" type="button" class="button_default">
+                <span></span>
+              </button>
+            </div>
+          </div>
+          <!-- 패치 버전 -->
+
+          <!-- DB 버전 -->
+          <div class="button_container">
+            <div id="div_db" style="display: block">
+              <button id="btn_db" type="button" class="button_default">
+                <span></span>
+              </button>
+            </div>
+          </div>
+          <!-- DB 버전 -->
+        </div>
+
+        <div>
+          <div class="role_container">
+            <div class="role_list">
+              <button>
+                <span>전체</span>
+              </button>
+              <button>
+                <img src="/img/icon_carry.jpg" width="24" alt="" height="24" />
+                <span>세이프 레인</span>
+              </button>
+              <button>
+                <img src="/img/icon_nuker.jpg" width="24" alt="" height="24" />
+                <span>미드</span>
+              </button>
+              <button>
+                <img src="/img/icon_durable.jpg" width="24" alt="" height="24" />
+                <span>오프 레인</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!-- Top Container -->
+
+    <!-- Main Container -->
+    <div class="main_container">
+      <!-- 좌측 영웅 자세히 보기 -->
+      <aside>
+        <div class="search">
+          <label class="hidden" for="filterHeroInput">영웅 검색 (항마사, 등등)</label>
+          <input
+            id="filterHeroInput"
+            type="text"
+            name="filterHeroInput"
+            placeholder="영웅 검색 (항마사, 등등)"
+            autocomplete="off"
+            class="css-1yt1ee4 es47g500"
+            value=""
+          />
+        </div>
+
+        <nav class="navHero">
+          <ul id="navHeroContainer"></ul>
+        </nav>
+      </aside>
+      <!-- 좌측 영웅 자세히 보기 -->
+
+      <!-- 우측 영웅 나열 -->
+
+      <main>
+        <table>
+          <colgroup>
+            <col width="70" />
+            <col width="*" />
+            <col width="64" />
+            <col width="94" />
+            <col width="110" />
+            <col width="94" />
+            <col width="135" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th align="left" scope="col" style="cursor: pointer">순번</th>
+              <th align="left" scope="col" style="cursor: pointer">영웅</th>
+              <th scope="col" order="-1" class="percent_text">티어</th>
+              <th scope="col" order="-1" class="percent_text">승률</th>
+              <th scope="col" order="-1" class="percent_text">픽률</th>
+              <th scope="col" order="-1" class="percent_text">밴률</th>
+              <th scope="col">상대하기 어려운 영웅</th>
+            </tr>
+          </thead>
+
+          <tbody id="mainHeroContainer"></tbody>
+        </table>
+      </main>
+
+      <!-- 우측 영웅 나열 -->
+    </div>
+  </div>
+</template>
+
+<script setup>
+</script>
+
+<style scoped>
+</style>
