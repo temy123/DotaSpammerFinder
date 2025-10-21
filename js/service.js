@@ -385,22 +385,29 @@ window.onload = () => {
     }
 
     function init() {
-        initSql().then((model) => {
-            getSessionData();
+        // Fetch the list of databases
+        fetch('http://127.0.0.1:5001/databases')
+            .then(response => response.json())
+            .then(databases => {
+                // For now, just use the first (most recent) database
+                const latestDb = databases[0];
+                initSql(latestDb).then((model) => {
+                    getSessionData();
 
-            // 영웅데이터와 매치데이터를 불러오고 끝나면 테이블을 그린다.
-            Promise.all([getHeroData(model), getMatchData(model)]).then((values) => {
-                initRoleButtons();
+                    // 영웅데이터와 매치데이터를 불러오고 끝나면 테이블을 그린다.
+                    Promise.all([getHeroData(model), getMatchData(model)]).then((values) => {
+                        initRoleButtons();
 
-                bindToNavHeroes();
-                bindToMainHeroes();
-                bindDropdown();
-                bindTableClickTags();
+                        bindToNavHeroes();
+                        bindToMainHeroes();
+                        bindDropdown();
+                        bindTableClickTags();
 
-                selectTier(currentTierValue);
-                selectPatch(currentPatchValue);
+                        selectTier(currentTierValue);
+                        selectPatch(currentPatchValue);
+                    });
+                });
             });
-        });
     }
 
     init();
@@ -448,10 +455,11 @@ function getSessionData() {
 }
 
 // Local 에 있는 DB 데이터 가져오기
-function getLocalDbData() {
+function getLocalDbData(dbName) {
     return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
-        xhr.open('get', '/db/od.db', true);
+        // Use the Flask endpoint to get the database file
+        xhr.open('get', `http://127.0.0.1:5001/db/${dbName}`, true);
         xhr.responseType = 'arraybuffer';
 
         xhr.onload = (e) => {
@@ -465,7 +473,7 @@ function getLocalDbData() {
     })
 }
 
-function initSql() {
+function initSql(dbName) {
     var config = {
         locateFile: filename => `/dist/${filename}`
     };
@@ -473,7 +481,7 @@ function initSql() {
     return initSqlJs(config)
         .then(function (SQL) {
             sql = SQL;
-            return getLocalDbData()
+            return getLocalDbData(dbName)
         })
         .then(data => {
             sql_model = new sql.Database(data['array']);

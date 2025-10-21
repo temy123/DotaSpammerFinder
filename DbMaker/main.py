@@ -178,7 +178,7 @@ def calculate_lane_roles(hero_df):
     hero_df['lane_role_2'] = 0
     hero_df['lane_role_3'] = 0
 
-    for i, hero_id in hero_df['id_x'].items():
+    for hero_id in hero_df.index:
         lane_roles = get_lane_roles(hero_id)
         # lane_roles 가 None 이면 60초 후 다시 시도
         if lane_roles is None:
@@ -187,9 +187,9 @@ def calculate_lane_roles(hero_df):
             lane_roles = get_lane_roles(hero_id)
 
         # lane_roles 데이터프레임을 hero_df에 hero_id 기준으로 lane_role1, lane_role2, lane_role3 컬럼에 추가
-        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_1'] = lane_roles.iloc[0]['lane_role_1']
-        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_2'] = lane_roles.iloc[0]['lane_role_2']
-        hero_df.loc[hero_df['id_x'] == hero_id, 'lane_role_3'] = lane_roles.iloc[0]['lane_role_3']
+        hero_df.loc[hero_id, 'lane_role_1'] = lane_roles.iloc[0]['lane_role_1']
+        hero_df.loc[hero_id, 'lane_role_2'] = lane_roles.iloc[0]['lane_role_2']
+        hero_df.loc[hero_id, 'lane_role_3'] = lane_roles.iloc[0]['lane_role_3']
 
         time.sleep(0.5)
 
@@ -224,9 +224,11 @@ def get_hero_stats():
     result.loc[result['primary_attr_y'] == 'str', 'primary_attr'] = '힘'
     result.loc[result['primary_attr_y'] == 'agi', 'primary_attr'] = '민첩'
     result.loc[result['primary_attr_y'] == 'int', 'primary_attr'] = '지능'
+    result['primary_attr'] = result['primary_attr'].astype(str)
 
     result.loc[result['attack_type'] == 'Melee', 'attack_type_kor'] = '근접'
     result.loc[result['attack_type'] == 'Ranged', 'attack_type_kor'] = '원거리'
+    result['attack_type_kor'] = result['attack_type_kor'].astype(str)
 
     result.rename(columns={
         'name_loc': 'localized_name_kor',
@@ -234,6 +236,10 @@ def get_hero_stats():
     }, inplace=True)
 
     result.drop('roles', axis='columns', inplace=True)
+    result.drop('turbo_picks_trend', axis='columns', inplace=True)
+    result.drop('turbo_wins_trend', axis='columns', inplace=True)
+    result.drop('pub_pick_trend', axis='columns', inplace=True)
+    result.drop('pub_win_trend', axis='columns', inplace=True)
 
     real_name_list = []
     for i, item in result['img'].items():
@@ -243,6 +249,7 @@ def get_hero_stats():
 
     result = result.join(pd.DataFrame(real_name_list, columns=['real_name']))
 
+    result.rename(columns={'id_x': 'hero_id'}, inplace=True)
     result.sort_index()
     result.set_index('hero_id', inplace=True)
 
