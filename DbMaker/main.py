@@ -213,7 +213,13 @@ def get_official_heroes_list():
 
 def get_opendota_heroes_list():
     response = request(URL_OPENDOTA_HERO_LIST)
-    return response.json()
+    response = response.json()
+    new_response = []
+    for item in response:
+        item["hero_id"] = item["id"]
+        new_response.append(item)
+
+    return json.loads(json.dumps(new_response))
 
 
 def get_hero_stats():
