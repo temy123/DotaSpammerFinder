@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Hero {
+  id                  Int      @id
+  name                String   @unique
+  localizedNameEng    String   @map("localized_name_eng")
+  localizedNameKor    String   @map("localized_name_kor")
+  primaryAttr         String   @map("primary_attr")
+  primaryAttrKor      String   @map("primary_attr_kor")
+  attackType          String   @map("attack_type")
+  attackTypeKor       String   @map("attack_type_kor")
+  imgUrl              String?  @map("img_url")
+  iconUrl             String?  @map("icon_url")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  stats               HeroStat[]
+  roles               HeroRole[]
+  matchups            HeroMatchup[] @relation("HeroMatchups")
+  counters            HeroMatchup[] @relation("CounterMatchups")
+
+  @@map("heroes")
+}
+
+model HeroStat {
+  id            Int      @id @default(autoincrement())
+  heroId        Int      @map("hero_id")
+  tier          Int      // 1-8 (Herald to Immortal)
+  picks         Int
+  wins          Int
+  tierRating    Int      @map("tier_rating") // 0-5 (OP to Tier 5)
+  patchVersion  String   @map("patch_version")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // Relations
+  hero          Hero     @relation(fields: [heroId], references: [id], onDelete: Cascade)
+
+  @@unique([heroId, tier, patchVersion])
+  @@map("hero_stats")
+}
+
+model HeroRole {
+  id        Int      @id @default(autoincrement())
+  heroId    Int      @map("hero_id")
+  roleType  Int      @map("role_type") // 1-5 (Carry, Mid, Offlane, Support, Hard Support)
+  priority  Int      // 1-3 (Primary, Secondary, Tertiary)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  hero      Hero     @relation(fields: [heroId], references: [id], onDelete: Cascade)
+
+  @@unique([heroId, roleType])
+  @@map("hero_roles")
+}
+
+model HeroMatchup {
+  id          Int      @id @default(autoincrement())
+  heroId      Int      @map("hero_id")
+  againstId   Int      @map("against_id")
+  gamesPlayed Int      @map("games_played")
+  wins        Int
+  tier        Int      // Rank tier
+  patchVersion String  @map("patch_version")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  hero        Hero     @relation("HeroMatchups", fields: [heroId], references: [id], onDelete: Cascade)
+  against     Hero     @relation("CounterMatchups", fields: [againstId], references: [id], onDelete: Cascade)
+
+  @@unique([heroId, againstId, tier, patchVersion])
+  @@map("hero_matchups")
+}
+
+model Player {
+  id              String   @id // OpenDota account_id as string
+  personaName     String?  @map("persona_name")
+  avatarUrl       String?  @map("avatar_url")
+  avatarFullUrl   String?  @map("avatar_full_url")
+  profileUrl      String?  @map("profile_url")
+  lastMatchTime   DateTime? @map("last_match_time")
+  rank            Int?
+  rankTier        Int?     @map("rank_tier")
+  leaderboardRank Int?     @map("leaderboard_rank")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("players")
+}
+
+model Match {
+  id            String   @id // OpenDota match_id as string
+  startTime     DateTime @map("start_time")
+  duration      Int
+  radiantWin    Boolean  @map("radiant_win")
+  gameMode      Int      @map("game_mode")
+  lobbyType     Int      @map("lobby_type")
+  patchVersion  String   @map("patch_version")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("matches")
+}
+
+model SystemInfo {
+  id           Int      @id @default(autoincrement())
+  key          String   @unique
+  value        String
+  description  String?
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("system_info")
+}

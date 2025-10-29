@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #282830;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5383e8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4169e1;
+}
+
+/* Custom components */
+@layer components {
+  .btn-primary {
+    @apply bg-dota-accent hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-dota-secondary hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg border border-gray-600 transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-dota-secondary rounded-lg border border-gray-700 p-4;
+  }
+  
+  .input-field {
+    @apply bg-dota-secondary border border-gray-600 rounded-lg px-3 py-2 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-dota-accent focus:border-transparent;
+  }
+  
+  .hero-card {
+    @apply bg-dota-secondary rounded-lg border border-gray-700 p-3 hover:border-dota-accent transition-colors duration-200 cursor-pointer;
+  }
+  
+  .tier-0 {
+    @apply text-red-400 font-bold;
+  }
+  
+  .tier-1 {
+    @apply text-orange-400 font-semibold;
+  }
+  
+  .tier-2 {
+    @apply text-yellow-400 font-medium;
+  }
+  
+  .tier-3 {
+    @apply text-green-400;
+  }
+  
+  .tier-4 {
+    @apply text-blue-400;
+  }
+  
+  .tier-5 {
+    @apply text-gray-400;
+  }
+}
+
+/* Loading animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}

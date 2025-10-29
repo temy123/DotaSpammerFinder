@@ -1,0 +1,42 @@
+{
+  "name": "dota-spammer-finder",
+  "version": "2.0.0",
+  "description": "Dota 2 player and hero analytics platform",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:shared && npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "build:shared": "cd shared && npm run build",
+    "install:all": "npm install && npm run install:backend && npm run install:frontend && npm run install:shared",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install:shared": "cd shared && npm install",
+    "clean": "rimraf node_modules frontend/node_modules backend/node_modules shared/node_modules",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test",
+    "test:frontend": "cd frontend && npm test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/temy123/DotaSpammerFinder.git"
+  },
+  "author": "temy123",
+  "license": "Apache-2.0"
+}
